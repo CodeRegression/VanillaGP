@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+
+<class base="InitializerBase">
+
+<namespace>NVL_AI</namespace>
+<solution>VanillaGPLib</solution>
+<name>DNAInitializer</name>
+<description>A base class of a grammar initializer</description>
+
+<includes>
+    <include name="vector" namespace="std" local="false" />
+    <include name="iostream" namespace="std" local="false" />
+    <include name="InitializerBase" local="true" />
+</includes>
+
+<variables>
+    <variable type="vector<int>" name="source" code="00" />
+    <variable type="int" name="position" code="10" />
+</variables>
+
+<constructors>
+    
+    <!-- Main Constructor-->
+    <constructor type="custom" inline="false">
+        <parameter type="const vector<int>&" name="dna" description="The DNA that we are initializing with" />
+    </constructor>
+
+</constructors>
+
+<methods>
+
+    <!-- Defines a methods for retrieving the next number within the sequence -->
+    <method section="Methods" modifiers="virtual" access="public" return="int" name="GetNext" description="Retrieve the next `gene`" inline="false">
+        <parameter type="int" name="minValue" description="The minimum value that we should be retrieving" />
+        <parameter type="int" name="maxValue" description="The maximumu value that we should be retrieving" />
+    </method>
+
+    <!-- Reset Pointer-->
+    <method section="Methods" access="public" return="void" name="ResetPointer" description="Add the logic to reset the given pointer" inline="false" />
+
+</methods>
+
+<tests>
+    <test name="test_dna_retrieval" description="Confirm that DNA retrieval + reset is working correctly" exception="false" />
+    <test name="test_dna_pointer_wrap" description="Confirm that the pointer wrap is working correctly" exception="false" />
+    <test name="test_range_exception" description="Confirm that the range exception functionality is working correctly" exception="false" />
+</tests> 
+
+</class>

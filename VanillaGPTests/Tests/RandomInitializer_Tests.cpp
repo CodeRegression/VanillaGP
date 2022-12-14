@@ -30,7 +30,7 @@ TEST(RandomInitializer_Test, test_dna_retrieval)
 		auto value = initializer->GetNext(i+1, i+5);
 		set_1.push_back(value);
 	}
-	auto dna_1 = vector<int>(initializer->GetDna());
+	auto dna_1 = vector<int>(initializer->GetDNA());
 
 	// Execute: Reset the DNA stuff
 	initializer->ResetDNA();
@@ -42,7 +42,7 @@ TEST(RandomInitializer_Test, test_dna_retrieval)
 		auto value = initializer->GetNext(i+1, i+5);
 		set_2.push_back(value);
 	}
-	auto dna_2 = vector<int>(initializer->GetDna());
+	auto dna_2 = vector<int>(initializer->GetDNA());
 
 	// Confirm: Set_1
 	ASSERT_EQ(set_1.size(), dna_1.size());

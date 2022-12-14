@@ -27,7 +27,7 @@ namespace NVL_AI
 		virtual int GetNext(int minValue, int maxValue) = 0;
 		inline void ResetDNA() { _dna.clear(); }
 
-		inline vector<int>& GetDna() { return _dna; }
+		inline vector<int>& GetDNA() { return _dna; }
 	protected:
 		inline void InsertDNA(int gene) { _dna.push_back(gene); }
 	};
