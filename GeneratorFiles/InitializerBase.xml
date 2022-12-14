@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+
+<class>
+
+<namespace>NVL_App</namespace>
+<solution>VanillaGPLib</solution>
+<name>InitializerBase</name>
+<description>A base class of a grammar initializer</description>
+
+<includes>
+    <include name="vector" namespace="vector" local="false" />
+    <include name="iostream" namespace="std" local="false" />
+</includes>
+
+<variables>
+    <variable type="vector<int>" name="dna" code="10" />
+</variables>
+
+<constructors>
+    <constructor type="empty" inline="true" />
+</constructors>
+
+<methods>
+    <!-- Defines a methods for retrieving the next number within the sequence -->
+    <method section="Methods" modifiers="virtual" access="public" return="int" name="GetNext" description="Retrieve the next `gene`" inline="true">
+        <parameter type="int" name="minValue" description="The minimum value that we should be retrieving" />
+        <parameter type="int" name="maxValue" description="The maximumu value that we should be retrieving" />
+    </method>
+
+    <!-- Defines a method for resetting the `caching` of the DNA sequence -->
+    <method section="Methods" access="public" return="void" name="ResetDNA" description="Reset the DNA `cache`" inline="true" />
+
+</methods>
+
+</class>
