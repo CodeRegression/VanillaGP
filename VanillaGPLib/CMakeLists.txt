@@ -6,7 +6,7 @@
 # Date Created: 2022-12-14
 #--------------------------------------------------------
 
-# Setup include directories
+# Setup includes directories
 include_directories("../" "${LIBRARY_BASE}/NVLib")
 
 # Create Library
