@@ -15,20 +15,16 @@ using namespace std;
 #include <iostream>
 using namespace std;
 
+#include <NVLib/RandomUtils.h>
+
+#include "InitializerBase.h"
+
 namespace NVL_AI
 {
-	class InitializerBase
+	class RandomInitializer : public InitializerBase
 	{
-	private:
-		vector<int> _dna;
 	public:
-		InitializerBase() {}
-
-		virtual int GetNext(int minValue, int maxValue) = 0;
-		inline void ResetDNA() { _dna.clear(); }
-
-		inline vector<int>& GetDna() { return _dna; }
-	protected:
-		inline void InsertDNA(int gene) { _dna.push_back(gene); }
+		RandomInitializer(int seed);
+		virtual int GetNext(int minValue, int maxValue) override;
 	};
 }

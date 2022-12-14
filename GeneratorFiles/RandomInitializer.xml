@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+
+<class base="InitializerBase">
+
+<namespace>NVL_AI</namespace>
+<solution>VanillaGPLib</solution>
+<name>RandomInitializer</name>
+<description>A base class of a grammar initializer</description>
+
+<includes>
+    <include name="vector" namespace="vector" local="false" />
+    <include name="iostream" namespace="std" local="false" />
+    <include name="NVLib/RandomUtils.h" local="false" />
+    <include name="InitializerBase" local="true" />
+</includes>
+
+<constructors>
+    
+    <!-- Main Constructor-->
+    <constructor type="custom" inline="false">
+        <parameter type="int" name="seed" description="Set the random number seed that we are generating" />
+    </constructor>
+
+</constructors>
+
+<methods>
+
+    <!-- Defines a methods for retrieving the next number within the sequence -->
+    <method section="Methods" modifiers="virtual" access="public" return="int" name="GetNext" description="Retrieve the next `gene`" inline="false">
+        <parameter type="int" name="minValue" description="The minimum value that we should be retrieving" />
+        <parameter type="int" name="maxValue" description="The maximumu value that we should be retrieving" />
+    </method>
+
+</methods>
+
+<tests>
+    <test name="test_dna_retrieval" description="Confirm that DNA retrieval + reset is working correctly" exception="false" />
+</tests> 
+
+</class>

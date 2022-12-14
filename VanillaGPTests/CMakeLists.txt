@@ -20,8 +20,9 @@ set_target_properties(UnitTestLib PROPERTIES
 )
 
 # Create the executable
-add_executable(VanillaGPTests
-    Tests/Example_Tests.cpp
+add_executable (VanillaGPTests
+	Tests/Example_Tests.cpp
+	Tests/RandomInitializer_Tests.cpp
 )
 
 # Add link libraries
