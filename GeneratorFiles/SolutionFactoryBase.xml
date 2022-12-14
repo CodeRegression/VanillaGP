@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+
+<class>
+
+<namespace>NVL_AI</namespace>
+<solution>VanillaGPLib</solution>
+<name>SolutionFactoryBase</name>
+<description>A base class for the factory that generates new solutions</description>
+
+<includes>
+    <include name="iostream" namespace="std" local="false" />
+    <include name="SolutionBase.h" local="true" />
+</includes>
+
+<variables>
+    <variable type="vector<int>" name="available" code="00" />
+</variables>
+
+<constructors>
+
+    <!-- Main Constructor -->
+    <constructor type="auto" inline="true" />
+
+</constructors>
+
+<methods>
+
+    <!-- Create a new solution -->
+    <method section="Methods" modifiers="virtual" access="public" return="SolutionBase *" name="Create" description="Create a solution" inline="true">
+        <parameter type="InitializerBase *" name="initializer" description="The initializer that we are going to use" />
+    </method>    
+
+    <!-- Breed Solutions -->
+    <method section="Methods" modifiers="virtual" access="public" return="SolutionBase *" name="Breed" description="Breed two solutions to get a child" inline="true">
+        <parameter type="SolutionBase *" name="mother" description="The `mother` of the child solution that we are creating" />
+        <parameter type="SolutionBase *" name="father" description="The `father` of the child solution that we are creating" />
+    </method>
+
+    <!-- Mutate Solutions -->
+    <method section="Methods" modifiers="virtual" access="public" return="SolutionBase *" name="Mutate" description="Mutate a solution" inline="true">
+        <parameter type="double" name="probability" description="The probability that a mutation occurs" />
+    </method>
+
+</methods>
+
+</class>

@@ -1,0 +1,51 @@
+<?xml version="1.0" ?>
+
+<class>
+
+<namespace>NVL_AI</namespace>
+<solution>VanillaGPLib</solution>
+<name>SolutionBase</name>
+<description>A base solution for the given project</description>
+
+<includes>
+    <include name="vector" namespace="std" local="false" />
+    <include name="iostream" namespace="std" local="false" />
+    <include name="InitializerBase.h" local="true" />
+</includes>
+
+<variables>
+    <variable type="vector<int>" name="dna" code="10" />
+</variables>
+
+<constructors>
+
+    <!-- Main Constructor-->
+    <constructor type="custom" inline="false">
+        <parameter type="InitializerBase *" name="initializer" description="The initializer that we are creating the solution from" />
+    </constructor>
+
+</constructors>
+
+<methods>
+
+    <!-- Retrieve the `source code` -->
+    <method section="Methods" modifiers="virtual" access="public" return="string" name="GetCode" description="Get the source code for this solution" inline="true" />
+
+    <!-- Evaluate -->
+    <method section="Methods" modifiers="virtual" access="public" return="double" name="Evaluate" description="Evaluate the solution for a given input" inline="true">
+        <parameter type="const vector<double>&" name="param" description="The input parameters for which we are evaluating the expression" />
+    </method>
+
+    <!-- Set available nodes -->
+    <method section="Methods" modifiers="virtual" access="public" return="void" name="SetAvailableNodes" description="Define the functions allowed in this grammar" inline="true">
+        <parameter type="const vector<int>&" name="available" description="The set of available nodes to choose from" />
+    </method>
+
+    <!-- Validation -->
+    <method section="Methods" modifiers="virtual" access="public" return="bool" name="Validate" description="Verify that the Solution has a valid structure" inline="true">
+        <parameter type="bool" name="verbose" description="Indicates if we want to be notified about the problem" />
+    </method>
+
+</methods>
+
+</class>
