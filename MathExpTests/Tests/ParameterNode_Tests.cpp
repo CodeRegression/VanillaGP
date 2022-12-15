@@ -20,15 +20,8 @@ using namespace NVL_AI;
  */
 TEST(ParameterNode_Test, node_name)
 {
-	FAIL() << "Not implemented";
-
-	// Setup
-
-	// Execute
-
-	// Confirm
-
-	// Teardown
+	auto node = ParameterNode(1);
+	ASSERT_EQ(node.GetType(), "parameter_node");
 }
 
 /**
@@ -36,31 +29,27 @@ TEST(ParameterNode_Test, node_name)
  */
 TEST(ParameterNode_Test, evaluate)
 {
-	FAIL() << "Not implemented";
-
-	// Setup
-
-	// Execute
-
-	// Confirm
-
-	// Teardown
+	auto parameters = vector<double> {1, 2, 3, 4 };
+	auto node = ParameterNode(1);
+	ASSERT_EQ(node.Evaluate(parameters), 2);
 }
 
 /**
- * @brief Test 
+ * @brief Confirm that code evaulation is working as expected
  */
 TEST(ParameterNode_Test, code_generation)
 {
-	FAIL() << "Not implemented";
+	auto node = ParameterNode(2);
+	ASSERT_EQ(node.GetCode(), "p[2]");
+}
 
-	// Setup
-
-	// Execute
-
-	// Confirm
-
-	// Teardown
+/**
+ * @brief Confirm that the child count is correct
+ */
+TEST(ParameterNode_Test, child_count)
+{
+	auto node = ParameterNode(2);
+	ASSERT_EQ(node.GetChildCount(), 0);
 }
 
 /**
@@ -69,12 +58,13 @@ TEST(ParameterNode_Test, code_generation)
 TEST(ParameterNode_Test, add_child)
 {
 	// Setup
-	auto expected = string("Not implemented");
+	auto expected = string("Child index is out of range");
 
 	// Execute
 	try
 	{
-		// TODO: Add call here
+		auto node = ParameterNode(1);
+		node.AddChild(0, nullptr);
 		FAIL() << "Expected exception: " << expected;
 	}
 	catch(runtime_error exception)
@@ -93,12 +83,13 @@ TEST(ParameterNode_Test, add_child)
 TEST(ParameterNode_Test, retrieve_child)
 {
 	// Setup
-	auto expected = string("Not implemented");
+	auto expected = string("Child index is out of range");
 
 	// Execute
 	try
 	{
-		// TODO: Add call here
+		auto node = ParameterNode(1);
+		auto child = node.GetChild(0);
 		FAIL() << "Expected exception: " << expected;
 	}
 	catch(runtime_error exception)

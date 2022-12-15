@@ -15,10 +15,11 @@ using namespace NVL_AI;
 
 /**
  * @brief Default Constructor
+ * @param paramIndex The index of the parameter that this node "wrappers"
  */
-ParameterNode::ParameterNode()
+ParameterNode::ParameterNode(int paramIndex) : LeafNode(), _paramIndex(paramIndex)
 {
-	throw runtime_error("Not implemented");
+	// Extra initialization can happen here
 }
 
 //--------------------------------------------------
@@ -32,7 +33,8 @@ ParameterNode::ParameterNode()
  */
 double ParameterNode::Evaluate(const vector<double>& params)
 {
-	throw runtime_error("Not implemented");
+	if (_paramIndex < 0 || _paramIndex >= params.size()) throw runtime_error("The parameter index appears to be out of range");
+	return params[_paramIndex];
 }
 
 /**
@@ -41,14 +43,16 @@ double ParameterNode::Evaluate(const vector<double>& params)
  */
 string ParameterNode::GetCode()
 {
-	throw runtime_error("Not implemented");
+	auto formatter = stringstream();
+	formatter << "p[" << _paramIndex << "]";
+	return formatter.str();
 }
 
 /**
  * @brief Retrieve the name assiociated with the node
  * @return string Returns a string
  */
-string ParameterNode::GetNodeName()
+string ParameterNode::GetType()
 {
-	throw runtime_error("Not implemented");
+	return "parameter_node";
 }

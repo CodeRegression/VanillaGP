@@ -24,7 +24,7 @@ namespace NVL_AI
 		virtual bool IsComplete() = 0;
 		virtual double Evaluate(const vector<double>& params) = 0;
 		virtual string GetCode() = 0;
-		virtual string GetNodeName() = 0;
+		virtual string GetType() = 0;
 		
 		inline int32_t GetChildCount() { return _children.size(); }
 

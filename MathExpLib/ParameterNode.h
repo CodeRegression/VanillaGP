@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include <sstream>
 #include <vector>
 #include <iostream>
 using namespace std;
@@ -21,11 +22,11 @@ namespace NVL_AI
 		private:
 			int _paramIndex;
 		public:
-			ParameterNode();
+			ParameterNode(int paramIndex);
 
 			virtual double Evaluate(const vector<double>& params) override;
 			virtual string GetCode() override;
-			virtual string GetNodeName() override;
+			virtual string GetType() override;
 
 			inline int& GetParamIndex() { return _paramIndex; }
 	};
