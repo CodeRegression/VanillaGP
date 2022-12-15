@@ -24,7 +24,9 @@ add_executable (MathExpTests
 	Tests/ParameterNode_Tests.cpp
 	Tests/AddNode_Tests.cpp
 	Tests/NodeFactory_Tests.cpp
+	Tests/ConstantNode_Tests.cpp
 )
+
 
 # Add link libraries
 target_link_libraries(MathExpTests MathExpLib VanillaGPLib NVLib ${OpenCV_LIBS} UnitTestLib GTest::Main)

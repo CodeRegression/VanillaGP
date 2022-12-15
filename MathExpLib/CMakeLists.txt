@@ -14,4 +14,6 @@ add_library (MathExpLib STATIC
 	ParameterNode.cpp
 	AddNode.cpp
 	NodeFactory.cpp
+	ConstantNode.cpp
 )
+
