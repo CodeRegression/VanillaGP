@@ -20,6 +20,7 @@ namespace NVL_AI
 		vector<NodeBase *> _children;
 	public:
 		NodeBase(int childCount) { for (auto i = 0; i < childCount; i++) _children.push_back(nullptr); }
+		~NodeBase() { for (auto& child : _children) if (child != nullptr) delete child; }
 
 		virtual bool IsComplete() = 0;
 		virtual double Evaluate(const vector<double>& params) = 0;
@@ -31,6 +32,7 @@ namespace NVL_AI
 		inline void AddChild(int index, NodeBase * node) 
 		{
 			if (index < 0 || index >= _children.size()) throw runtime_error("Child index is out of range");
+			if (_children[index] != nullptr) delete _children[index];
 			_children[index] = node;
 		}
 		

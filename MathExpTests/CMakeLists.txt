@@ -22,7 +22,9 @@ set_target_properties(UnitTestLib PROPERTIES
 # Create the executable
 add_executable (MathExpTests
 	Tests/ParameterNode_Tests.cpp
+	Tests/AddNode_Tests.cpp
 )
+
 
 # Add link libraries
 target_link_libraries(MathExpTests MathExpLib NVLib ${OpenCV_LIBS} UnitTestLib GTest::Main)
