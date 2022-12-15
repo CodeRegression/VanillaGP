@@ -34,5 +34,10 @@ NodeFactory::NodeFactory(int paramCount)
  */
 NodeBase * NodeFactory::CreateNode(NodeType nodeType, InitializerBase * initializer)
 {
-	throw runtime_error("Not implemented");
+	switch(nodeType) 
+	{
+		case NodeType::ADD_NODE: return new AddNode();
+		case NodeType::PARAMETER_NODE: return new ParameterNode(initializer->GetNext(0, _paramCount));
+		default: throw runtime_error("Unknown node type");
+	};
 }
