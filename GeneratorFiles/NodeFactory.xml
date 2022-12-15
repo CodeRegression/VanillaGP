@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+
+<class>
+
+<namespace>NVL_AI</namespace>
+<solution>MathExpLib</solution>
+<name>NodeFactory</name>
+<description>A node generate factory based on a given initializer</description>
+
+<includes>
+    <include name="iostream" namespace="std" local="false" />
+    <include name="VanillaGPLib/GrammarBase/InitializerBase.h" local="false" />
+    <include name="NodeBase.h" local="true" />
+</includes>
+
+<variables>
+    <variable type="int" name="paramCount" code="00" />
+</variables>
+
+<constructors>
+    <constructor type="auto" inline="false" />
+</constructors>
+
+<methods>
+
+    <!-- Defines the logic to generate a node-->
+    <method section="Create" access="public" return="NodeBase *" name="CreateNode" description="Add the logic to create a new node" inline="false">
+        <parameter type="NodeType" name="nodeType" description="The type of node that we want to create" />
+        <parameter type="InitializerBase *" name="initializer" description="An initializer for generating `extra` parameters to associated with the function" />
+    </method>    
+
+</methods>
+
+<tests>
+    <test name="create_parameter" description="Create a parameter attribute" exception="false" />
+    <test name="create_add" description="Create an attribute" exception="false" />
+</tests> 
+
+</class>

@@ -13,4 +13,5 @@ include_directories("../" "${LIBRARY_BASE}/NVLib")
 add_library (MathExpLib STATIC
 	ParameterNode.cpp
 	AddNode.cpp
+	NodeFactory.cpp
 )
