@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+
+<class base="LeafNode">
+
+<namespace>NVL_AI</namespace>
+<solution>MathExpLib</solution>
+<name>ParameterNode</name>
+<description>A base class for the given node</description>
+
+<includes>
+    <include name="vector" namespace="std" local="false" />
+    <include name="iostream" namespace="std" local="false" />
+    <include name="LeafNode.h" local="true" />
+</includes>
+
+<variables>
+    <variable type="int" name="paramIndex" code="10" />
+</variables>
+
+<constructors>
+
+    <constructor type="empty" inline="false" />
+
+</constructors>
+
+<methods>
+
+    <!-- Evaluate the Node-->
+    <method section="Methods" modifiers="virtual" access="public" return="double" name="Evaluate" description="Evaluate this node (along with children)" inline="false">
+        <parameter type="const vector<double>&" name="params" description="The input parameters associated with the application" />
+    </method>
+
+    <!-- Generate the `source code` associated with this part -->
+    <method section="Methods" modifiers="virtual" access="public" return="string" name="GetCode" description="Generate source code for this node (including children)" inline="false" />
+
+    <!-- Get node name -->
+    <method section="Methods" modifiers="virtual" access="public" return="string" name="GetNodeName" description="Retrieve the name assiociated with the node" inline="false" />
+
+</methods>
+
+<tests>
+    <test name="node_name" description="Test retrieval of the node name" exception="false" />
+    <test name="evaluate" description="Confirm the evaluation functionality" exception="false" />
+    <test name="code_generation" description="Test " exception="false" />
+    <test name="add_child" description="Attempt to add a child to the system" exception="true" />
+    <test name="retrieve_child" description="Attempt to retrieve a child from the system" exception="true" />
+</tests> 
+
+</class>

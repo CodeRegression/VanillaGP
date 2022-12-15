@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+
+<class>
+
+<namespace>NVL_AI</namespace>
+<solution>MathExpLib</solution>
+<name>NodeBase</name>
+<description>A base class for the given node</description>
+
+<includes>
+    <include name="vector" namespace="std" local="false" />
+    <include name="iostream" namespace="std" local="false" />
+    <include name="VanillaGPLib/GrammarBase/InitializerBase.h" local="false" />
+</includes>
+
+<variables>
+    <variable type="vector<NodeBase *>" name="children" code="00" />
+    <variable type="vector<int>" name="dna" code="11" />
+</variables>
+
+<constructors>
+
+    <constructor type="custom" inline="false">
+        <parameter type="InitializerBase *" name="initializer" description="The given initializer of the system" />
+    </constructor>
+
+</constructors>
+
+<methods>
+
+    <!-- Is Complete -->
+    <method section="Methods" modifiers="virtual" access="public" return="bool" name="IsComplete" description="Determine of this function setup contains everything" inline="true" />
+
+    <!-- Evaluate the Node-->
+    <method section="Methods" modifiers="virtual" access="public" return="double" name="Evaluate" description="Evaluate this node (along with children)" inline="true">
+        <parameter type="const vector<double>&" name="params" description="The input parameters associated with the application" />
+    </method>
+
+    <!-- Generate the `source code` associated with this part -->
+    <method section="Methods" modifiers="virtual" access="public" return="string" name="GetCode" description="Generate source code for this node (including children)" inline="true" />
+
+    <!-- Get node name -->
+    <method section="Methods" modifiers="virtual" access="public" return="string" name="GetNodeName" description="Retrieve the name assiociated with the node" inline="true" />
+
+    <!-- Get the Child Limit -->
+    <method section="Methods" modifiers="virtual" access="public" return="string" name="GetChildCount" description="Retrieve the number of children associated with this node" inline="true" />
+
+    <!-- Add a child -->
+    <method section="Methods" modifiers="inline" access="public" return="void" name="AddChild" description="Add a child to the system" inline="true">
+        <parameter type="int" name="index" description="The index of the child we are adding" />
+        <parameter type="NodeBase *" name="node" description="The node that we are adding as a child" />
+    </method>
+
+    <!-- Retrieve a child -->
+    <method section="Methods" modifiers="inline" access="public" return="NodeBase *" name="GetChild" description="Retrieve a child from the system" inline="true">
+        <parameter type="int" name="index" description="The index of the node that we want" />
+    </method>
+
+</methods>
+
+</class>

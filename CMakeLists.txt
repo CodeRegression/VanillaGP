@@ -29,12 +29,14 @@ set_target_properties(NVLib PROPERTIES
     INTERFACE_INCLUDE_DIRECTORIES "${LIBRARY_BASE}/NVLib"
 )
 
-# Add opencv to the solution
+# Add OpenCV to the solution
 find_package( OpenCV REQUIRED)
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
 # Add the available subfolders
 add_subdirectory(VanillaGPLib)
 add_subdirectory(VanillaGPTests)
+add_subdirectory(MathExpLib)
+add_subdirectory(MathExpTests)
 add_subdirectory(VanillaGP)
 

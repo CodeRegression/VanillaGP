@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+
+<class>
+
+<namespace>NVL_AI</namespace>
+<solution>MathExpLib</solution>
+<name>LeafNode</name>
+<description>A base class for a node without children</description>
+
+<includes>
+    <include name="vector" namespace="std" local="false" />
+    <include name="iostream" namespace="std" local="false" />
+    <include name="VanillaGPLib/GrammarBase/InitializerBase.h" local="false" />
+</includes>
+
+<variables>
+    <variable type="vector<NodeBase *>" name="children" code="00" />
+    <variable type="vector<int>" name="dna" code="11" />
+</variables>
+
+<constructors>
+
+    <constructor type="custom" inline="false">
+        <parameter type="InitializerBase *" name="initializer" description="The given initializer of the system" />
+    </constructor>
+
+</constructors>
+
+<methods>
+
+    <!-- Is Complete -->
+    <method section="Methods" modifiers="virtual" access="public" return="bool" name="IsComplete" description="Determine of this function setup contains everything" inline="true" />
+
+    <!-- Get the Child Limit -->
+    <method section="Methods" modifiers="virtual" access="public" return="string" name="GetChildCount" description="Retrieve the number of children associated with this node" inline="true" />
+
+</methods>
+
+</class>
