@@ -16,6 +16,8 @@ add_library (MathExpLib STATIC
 	NodeFactory.cpp
 	ConstantNode.cpp
 	MultiplyNode.cpp
+	PowerNode.cpp
 )
+
 
 
