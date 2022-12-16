@@ -17,14 +17,11 @@ namespace NVL_AI
 {
 	class SolutionFactoryBase
 	{
-	private:
-		vector<int> _available;
 	public:
-		SolutionFactoryBase(vector<int>& available) :
-			_available(available) {}
+		SolutionFactoryBase() {}
 
 		virtual SolutionBase * Create(InitializerBase * initializer) = 0;
-		virtual SolutionBase * Breed(SolutionBase * mother, SolutionBase * father) = 0;
-		virtual SolutionBase * Mutate(double probability) = 0;
+		virtual SolutionBase * Breed(InitializerBase * initializer, SolutionBase * mother, SolutionBase * father) = 0;
+		virtual SolutionBase * Mutate(InitializerBase * initializer, double probability) = 0;
 	};
 }

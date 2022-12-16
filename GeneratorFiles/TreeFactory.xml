@@ -1,0 +1,59 @@
+<?xml version="1.0" ?>
+
+<class base="SolutionFactory" terminator="true">
+
+<namespace>NVL_AI</namespace>
+<solution>MathExpLib</solution>
+<name>TreeFactory</name>
+<description>A factory for generating new expression trees in various ways</description>
+
+<includes>
+    <include name="iostream" namespace="std" local="false" />
+    <include name="SolutionFactoryBase.h" local="true" />
+    <include name="TreeProperties.h" local="true" />
+</includes>
+
+<variables>
+    <variable type="TreeProperties *" name="properties" code="00" />
+</variables>
+
+<constructors>
+
+    <!-- Main Constructor -->
+    <constructor type="auto" inline="false" />
+
+</constructors>
+
+<methods>
+
+    <!-- Create a new solution -->
+    <method section="Methods" modifiers="virtual" access="public" return="SolutionBase *" name="Create" description="Create a solution" inline="false">
+        <parameter type="InitializerBase *" name="initializer" description="The initializer that we are going to use" />
+    </method>    
+
+    <!-- Breed Solutions -->
+    <method section="Methods" modifiers="virtual" access="public" return="SolutionBase *" name="Breed" description="Breed two solutions to get a child" inline="false">
+        <parameter type="InitializerBase *" name="initializer" description="The initializer that we will use to make the choices for the breeding" />
+        <parameter type="SolutionBase *" name="mother" description="The `mother` of the child solution that we are creating" />
+        <parameter type="SolutionBase *" name="father" description="The `father` of the child solution that we are creating" />
+    </method>
+
+    <!-- Mutate Solutions -->
+    <method section="Methods" modifiers="virtual" access="public" return="SolutionBase *" name="Mutate" description="Mutate a solution" inline="false">
+        <parameter type="InitializerBase *" name="initializer" description="The initailizer that we will use to make the choices for the mutation" />
+        <parameter type="double" name="probability" description="The probability that a mutation occurs" />
+    </method>
+
+</methods>
+
+<tests>
+    <test name="tree_generation" description="Test the generation of a tree" exception="false" />
+    <test name="node_limit" description="Confirm the operation of the node limiting functionality" exception="false" />
+    <test name="depth_limit" description="Confirm the depth limitation functionality" exception="false" />
+    <test name="no_mutation" description="Confirm no mutation" exception="false" />
+    <test name="mutation" description="Confirm that mutation happens as expected" exception="false" />
+    <test name="controlled_breeding" description="Confirm controlled breeding" exception="false" />
+    <test name="depth_difference_breeding" description="Confirm the operation of breeding when new nodes need to be generated" />
+</tests> 
+
+</class>

@@ -13,16 +13,29 @@ using namespace std;
 
 #include <VanillaGPLib/GrammarBase/InitializerBase.h>
 
-#include "NodeBase.h"
-#include "ParameterNode.h"
 #include "AddNode.h"
+#include "ConstantNode.h"
+#include "InvertNode.h"
+#include "MultiplyNode.h"
+#include "NegateNode.h"
+#include "ParameterNode.h"
+#include "PowerNode.h"
 
 namespace NVL_AI
 {
 	class NodeFactory
 	{
 	public:
-		enum class NodeType { PARAMETER_NODE = 1, ADD_NODE = 2};
+		enum class NodeType 
+		{ 
+			ADD_NODE = 1, 
+			CONSTANT_NODE = 2, 
+			INVERT_NODE = 3,
+			MULTIPLY_NODE = 4,
+			NEGATE_NODE = 5,
+			PARAMETER_NODE = 6,
+			POWER_NODE = 7
+		};
 	private:
 		int _paramCount;
 	public:

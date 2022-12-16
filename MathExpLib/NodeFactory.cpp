@@ -37,7 +37,12 @@ NodeBase * NodeFactory::CreateNode(NodeType nodeType, InitializerBase * initiali
 	switch(nodeType) 
 	{
 		case NodeType::ADD_NODE: return new AddNode();
+		case NodeType::CONSTANT_NODE: return new ConstantNode(initializer->GetNext(-100, 100));
+		case NodeType::INVERT_NODE: return new InvertNode();
+		case NodeType::MULTIPLY_NODE: return new MultiplyNode();
+		case NodeType::NEGATE_NODE: return new NegateNode();
 		case NodeType::PARAMETER_NODE: return new ParameterNode(initializer->GetNext(0, _paramCount));
+		case NodeType::POWER_NODE: return new PowerNode();
 		default: throw runtime_error("Unknown node type");
 	};
 }

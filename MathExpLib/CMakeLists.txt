@@ -20,7 +20,11 @@ add_library (MathExpLib STATIC
 	NegateNode.cpp
 	InvertNode.cpp
 	ExpressionTree.cpp
+	TreeFactory.cpp
 )
+
+
+
 
 
 

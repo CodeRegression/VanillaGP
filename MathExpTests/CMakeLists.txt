@@ -29,7 +29,13 @@ add_executable (MathExpTests
 	Tests/PowerNode_Tests.cpp
 	Tests/NegateNode_Tests.cpp
 	Tests/InvertNode_Tests.cpp
+	Tests/TreeFactory_Tests.cpp
 )
+
+
+
+
+
 
 
 

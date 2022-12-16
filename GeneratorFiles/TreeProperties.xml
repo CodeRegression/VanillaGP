@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+
+<class>
+
+<namespace>NVL_AI</namespace>
+<solution>MathExpLib</solution>
+<name>TreeProperties</name>
+<description>The set of properties associated with the generation of trees</description>
+
+<includes>
+    <include name="vector" namespace="std" local="false" />
+    <include name="iostream" namespace="std" local="false" />
+</includes>
+
+<variables>
+    <variable type="vector<int>" name="availableNodes" code="10" />
+    <variable type="int" name="depthLimit" code="10" />
+    <variable type="int" name="paramCount" code="10" />
+</variables>
+
+<constructors>
+    <!-- Main Constructor-->
+    <constructor type="auto" inline="true" />
+</constructors>
+
+</class>
