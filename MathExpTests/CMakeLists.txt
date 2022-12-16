@@ -25,7 +25,9 @@ add_executable (MathExpTests
 	Tests/AddNode_Tests.cpp
 	Tests/NodeFactory_Tests.cpp
 	Tests/ConstantNode_Tests.cpp
+	Tests/MultiplyNode_Tests.cpp
 )
+
 
 
 # Add link libraries

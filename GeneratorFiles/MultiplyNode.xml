@@ -1,29 +1,22 @@
 <?xml version="1.0" ?>
 
-<class base="LeafNode">
+<class base="BinaryNode">
 
 <namespace>NVL_AI</namespace>
 <solution>MathExpLib</solution>
-<name>ConstantNode</name>
-<description>A node that wrappers a constant</description>
+<name>MultiplyNode</name>
+<description>A function node that multiplies two nodes together</description>
 
 <includes>
     <include name="sstream" namespace="std" local="false" />
     <include name="vector" namespace="std" local="false" />
     <include name="iostream" namespace="std" local="false" />
-    <include name="LeafNode.h" local="true" />
+    <include name="BinaryNode.h" local="true" />
 </includes>
-
-<variables>
-    <variable type="double" name="value" code="10" />
-</variables>
 
 <constructors>
 
-    <!-- Main Constructor -->
-    <constructor type="custom" inline="false">
-        <parameter type="int" name="value" description="The value representing the constant" />
-    </constructor>
+    <constructor type="empty" inline="false" />
 
 </constructors>
 
@@ -38,14 +31,15 @@
     <method section="Methods" modifiers="virtual" access="public" return="string" name="GetCode" description="Generate source code for this node (including children)" inline="false" />
 
     <!-- Get node name -->
-    <method section="Methods" modifiers="virtual" access="public" return="string" name="GetType" description="Retrieve the name assiociated with the node" inline="false" />
+    <method section="Methods" modifiers="virtual" access="public" return="string" name="GetType" description="Retrieve the name associated with the node" inline="false" />
 
 </methods>
 
 <tests>
-    <test name="node_name" description="Test retrieval of the node name" exception="false" />
+    <test name="node_type" description="Test retrieval of the node type" exception="false" />
     <test name="evaluate" description="Confirm the evaluation functionality" exception="false" />
-    <test name="code_generation" description="Test " exception="false" />
+    <test name="code_generation" description="Test that the code generation is working effectively" exception="false" />
+    <test name="child_count" description="Determine if the child count is correct" />
 </tests> 
 
 </class>
