@@ -27,7 +27,9 @@ add_executable (MathExpTests
 	Tests/ConstantNode_Tests.cpp
 	Tests/MultiplyNode_Tests.cpp
 	Tests/PowerNode_Tests.cpp
+	Tests/NegateNode_Tests.cpp
 )
+
 
 
 
