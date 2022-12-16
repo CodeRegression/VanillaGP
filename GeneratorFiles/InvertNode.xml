@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+
+<class base="MonoNode">
+
+<namespace>NVL_AI</namespace>
+<solution>MathExpLib</solution>
+<name>InvertNode</name>
+<description>A node that inverts the value that it "wrappers"</description>
+
+<includes>
+    <include name="sstream" namespace="std" local="false" />
+    <include name="vector" namespace="std" local="false" />
+    <include name="iostream" namespace="std" local="false" />
+    <include name="MonoNode.h" local="true" />
+</includes>
+
+<constructors>
+
+    <constructor type="empty" inline="false" />
+
+</constructors>
+
+<methods>
+
+    <!-- Evaluate the Node-->
+    <method section="Methods" modifiers="virtual" access="public" return="double" name="Evaluate" description="Evaluate this node (along with children)" inline="false">
+        <parameter type="const vector<double>&" name="params" description="The input parameters associated with the application" />
+    </method>
+
+    <!-- Generate the `source code` associated with this part -->
+    <method section="Methods" modifiers="virtual" access="public" return="string" name="GetCode" description="Generate source code for this node (including children)" inline="false" />
+
+    <!-- Get node name -->
+    <method section="Methods" modifiers="virtual" access="public" return="string" name="GetType" description="Retrieve the name associated with the node" inline="false" />
+
+</methods>
+
+<tests>
+    <test name="node_type" description="Test retrieval of the node type" exception="false" />
+    <test name="evaluate" description="Confirm the evaluation functionality" exception="false" />
+    <test name="code_generation" description="Test that the code generation is working effectively" exception="false" />
+    <test name="child_count" description="Determine if the child count is correct" />
+</tests> 
+
+</class>

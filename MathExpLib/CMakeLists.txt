@@ -18,4 +18,6 @@ add_library (MathExpLib STATIC
 	MultiplyNode.cpp
 	PowerNode.cpp
 	NegateNode.cpp
+	InvertNode.cpp
 )
+
