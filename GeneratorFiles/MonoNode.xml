@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+
+<class>
+
+<namespace>NVL_AI</namespace>
+<solution>MathExpLib</solution>
+<name>MonoNode</name>
+<description>A base class for a node with exactly one child</description>
+
+<includes>
+    <include name="sstream" namespace="std" local="false" />
+    <include name="vector" namespace="std" local="false" />
+    <include name="iostream" namespace="std" local="false" />
+</includes>
+
+<constructors>
+
+    <!-- Main Constructor -->
+    <constructor type="empty" inline="false" />
+  
+</constructors>
+
+<methods>
+
+    <!-- Is Complete -->
+    <method section="Methods" modifiers="virtual" access="public" return="bool" name="IsComplete" description="Determine of this function setup contains everything" inline="true" />
+
+    <!-- Get the Child Limit -->
+    <method section="Methods" modifiers="virtual" access="public" return="string" name="GetChildCount" description="Retrieve the number of children associated with this node" inline="true" />
+
+</methods>
+
+</class>

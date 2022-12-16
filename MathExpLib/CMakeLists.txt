@@ -18,6 +18,3 @@ add_library (MathExpLib STATIC
 	MultiplyNode.cpp
 	PowerNode.cpp
 )
-
-
-
