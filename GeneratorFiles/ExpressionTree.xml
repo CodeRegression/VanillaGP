@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+
+<class base="SolutionBase">
+
+<namespace>NVL_AI</namespace>
+<solution>MathExpLib</solution>
+<name>ExpressionTree</name>
+<description>The solution that we are adding to the system</description>
+
+<includes>
+    <include name="vector" namespace="std" local="false" />
+    <include name="iostream" namespace="std" local="false" />
+    <include name="VanillaGPLib/GrammarBase/SolutionBase.h" local="false" />
+    <include name="NodeBase.h" local="true" />
+</includes>
+
+<variables>
+    <variable type="NodeBase *" name="root" code="10" />
+</variables>
+
+<constructors>
+
+    <!-- Main Constructor-->
+    <constructor type="custom" inline="false">
+        <parameter type="NodeBase *" name="root" description="The root node of the expression tree that makes up this solution" />
+    </constructor>
+
+</constructors>
+
+<methods>
+
+    <!-- Retrieve the `source code` -->
+    <method section="Methods" modifiers="virtual" access="public" return="string" name="GetCode" description="Get the source code for this solution" inline="false" />
+
+    <!-- Evaluate -->
+    <method section="Methods" modifiers="virtual" access="public" return="double" name="Evaluate" description="Evaluate the solution for a given input" inline="false">
+        <parameter type="const vector<double>&" name="param" description="The input parameters for which we are evaluating the expression" />
+    </method>
+
+</methods>
+
+</class>

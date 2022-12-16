@@ -20,14 +20,15 @@ namespace NVL_AI
 	{
 	private:
 		vector<int> _dna;
+		double _score;
 	public:
-		SolutionBase(InitializerBase * initializer) {}
+		SolutionBase(const vector<int>& dna) : _dna(dna), _score(-1) {}
 
 		virtual string GetCode() = 0;
 		virtual double Evaluate(const vector<double>& param) = 0;
-		virtual void SetAvailableNodes(const vector<int>& available) = 0;
-		virtual bool Validate(bool verbose) = 0;
 
 		inline vector<int>& GetDNA() { return _dna; }
+		inline double GetScore() { return _score; }
+		inline void SetScore(double value) { _score = value; }
 	};
 }
