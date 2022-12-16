@@ -17,9 +17,9 @@ using namespace NVL_AI;
  * @brief Custom Constructor
  * @param value The value representing the constant
  */
-ConstantNode::ConstantNode(int value)
+ConstantNode::ConstantNode(int value) : LeafNode()
 {
-	throw runtime_error("Not implemented");
+	_value = value / 100.0;
 }
 
 //--------------------------------------------------
@@ -33,7 +33,7 @@ ConstantNode::ConstantNode(int value)
  */
 double ConstantNode::Evaluate(const vector<double>& params)
 {
-	throw runtime_error("Not implemented");
+	return _value;
 }
 
 /**
@@ -42,7 +42,7 @@ double ConstantNode::Evaluate(const vector<double>& params)
  */
 string ConstantNode::GetCode()
 {
-	throw runtime_error("Not implemented");
+	return NVLib::StringUtils::Double2String(_value);
 }
 
 /**
@@ -51,5 +51,5 @@ string ConstantNode::GetCode()
  */
 string ConstantNode::GetType()
 {
-	throw runtime_error("Not implemented");
+	return "constant_node";
 }

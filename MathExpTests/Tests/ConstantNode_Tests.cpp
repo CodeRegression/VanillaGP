@@ -16,19 +16,12 @@ using namespace NVL_AI;
 //--------------------------------------------------
 
 /**
- * @brief Test retrieval of the node name
+ * @brief Test retrieval of the node type
  */
-TEST(ConstantNode_Test, node_name)
+TEST(ConstantNode_Test, node_type)
 {
-	FAIL() << "Not implemented";
-
-	// Setup
-
-	// Execute
-
-	// Confirm
-
-	// Teardown
+	auto node = ConstantNode(1);
+	ASSERT_EQ(node.GetType(), "constant_node");
 }
 
 /**
@@ -36,15 +29,9 @@ TEST(ConstantNode_Test, node_name)
  */
 TEST(ConstantNode_Test, evaluate)
 {
-	FAIL() << "Not implemented";
-
-	// Setup
-
-	// Execute
-
-	// Confirm
-
-	// Teardown
+	auto parameters = vector<double> {1, 2, 3};
+	auto node = ConstantNode(1);
+	ASSERT_EQ(node.Evaluate(parameters), 1e-2);
 }
 
 /**
@@ -52,13 +39,6 @@ TEST(ConstantNode_Test, evaluate)
  */
 TEST(ConstantNode_Test, code_generation)
 {
-	FAIL() << "Not implemented";
-
-	// Setup
-
-	// Execute
-
-	// Confirm
-
-	// Teardown
+	auto node = ConstantNode(1);
+	ASSERT_EQ(node.GetCode(), "0.01");
 }

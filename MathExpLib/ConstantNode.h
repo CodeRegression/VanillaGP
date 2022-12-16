@@ -13,22 +13,23 @@
 #include <iostream>
 using namespace std;
 
+#include <NVLib/StringUtils.h>
+
 #include "LeafNode.h"
 
 namespace NVL_AI
 {
 	class ConstantNode : public LeafNode
 	{
-		private:
-			double _value;
+	private:
+		double _value;
+	public:
+		ConstantNode(int value);
 
-		public:
-			ConstantNode(int value);
+		virtual double Evaluate(const vector<double>& params);
+		virtual string GetCode();
+		virtual string GetType();
 
-			virtual double Evaluate(const vector<double>& params);
-			virtual string GetCode();
-			virtual string GetType();
-
-			inline double& GetValue() { return _value; }
+		inline double& GetValue() { return _value; }
 	};
 }
