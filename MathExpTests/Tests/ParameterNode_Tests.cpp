@@ -16,6 +16,18 @@ using namespace NVL_AI;
 //--------------------------------------------------
 
 /**
+ * Confirm that the DNA that we are using correct
+ */
+TEST(ParameterNode_Test, node_dna) 
+{
+	auto node = ParameterNode(4);
+	auto gene = vector<int>(); node.GetGenes(gene);
+	ASSERT_EQ(gene.size(), 2);
+	ASSERT_EQ(gene[0], 6);
+	ASSERT_EQ(gene[1], 4);
+}
+
+/**
  * @brief Test retrieval of the node name
  */
 TEST(ParameterNode_Test, node_name)

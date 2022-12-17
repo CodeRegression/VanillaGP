@@ -58,3 +58,12 @@ string InvertNode::GetType()
 {
 	return "invert_node";
 }
+
+/**
+ * @brief Add the functionality to get a particular node
+ * @param dna The DNA elements that we are adding to
+ */
+void InvertNode::GetGenes(vector<int>& dna) 
+{
+	dna.push_back(3);
+}

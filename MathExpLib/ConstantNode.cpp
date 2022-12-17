@@ -17,7 +17,7 @@ using namespace NVL_AI;
  * @brief Custom Constructor
  * @param value The value representing the constant
  */
-ConstantNode::ConstantNode(int value) : LeafNode()
+ConstantNode::ConstantNode(int value) : LeafNode(), _originalValue(value)
 {
 	_value = value / 100.0;
 }
@@ -52,4 +52,13 @@ string ConstantNode::GetCode()
 string ConstantNode::GetType()
 {
 	return "constant_node";
+}
+
+/**
+ * @brief Add the functionality to get a particular node
+ * @param dna The DNA elements that we are adding to
+ */
+void ConstantNode::GetGenes(vector<int>& dna) 
+{
+	dna.push_back(2); dna.push_back(_originalValue);
 }

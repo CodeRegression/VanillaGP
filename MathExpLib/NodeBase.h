@@ -26,6 +26,7 @@ namespace NVL_AI
 		virtual double Evaluate(const vector<double>& params) = 0;
 		virtual string GetCode() = 0;
 		virtual string GetType() = 0;
+		virtual void GetGenes(vector<int>& dna) = 0;
 		
 		inline int32_t GetChildCount() { return _children.size(); }
 

@@ -60,3 +60,12 @@ string MultiplyNode::GetType()
 {
 	return "multiply_node";
 }
+
+/**
+ * @brief Add the functionality to get a particular node
+ * @param dna The DNA elements that we are adding to
+ */
+void MultiplyNode::GetGenes(vector<int>& dna) 
+{
+	dna.push_back(4);
+}

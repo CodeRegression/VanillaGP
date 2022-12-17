@@ -27,6 +27,7 @@ namespace NVL_AI
 			virtual double Evaluate(const vector<double>& params) override;
 			virtual string GetCode() override;
 			virtual string GetType() override;
+			virtual void GetGenes(vector<int>& dna) override;
 
 			inline int& GetParamIndex() { return _paramIndex; }
 	};
