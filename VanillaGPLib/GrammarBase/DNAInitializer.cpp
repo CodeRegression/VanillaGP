@@ -38,7 +38,6 @@ int DNAInitializer::GetNext(int minValue, int maxValue)
 	if (_position >= _source.size()) ResetPointer();
 	auto value = _source[_position++];
 	if (value < minValue || value > maxValue) throw runtime_error("Predefined DNA failed range test");
-	InsertDNA(value);
 	return value;
 }
 

@@ -35,6 +35,5 @@ RandomInitializer::RandomInitializer(int seed)
 int RandomInitializer::GetNext(int minValue, int maxValue)
 {
 	auto result = NVLib::RandomUtils::GetInteger(NVLib::Range(minValue, maxValue));
-	InsertDNA(result);
 	return result;
 }
