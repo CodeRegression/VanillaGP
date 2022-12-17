@@ -20,7 +20,7 @@ namespace NVL_AI
 	public:
 		SolutionFactoryBase() {}
 
-		virtual SolutionBase * Create(InitializerBase * initializer) = 0;
+		virtual SolutionBase * Create(InitializerBase * initializer, int level) = 0;
 		virtual SolutionBase * Breed(InitializerBase * initializer, SolutionBase * mother, SolutionBase * father) = 0;
 		virtual SolutionBase * Mutate(InitializerBase * initializer, double probability) = 0;
 	};

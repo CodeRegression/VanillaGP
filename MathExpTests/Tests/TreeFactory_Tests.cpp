@@ -21,6 +21,7 @@ using namespace NVL_AI;
 
 int GetTreeDepth(ExpressionTree * tree);
 void GetParameters(ExpressionTree * tree, vector<int>& parameters);
+void GetNodeTypes(ExpressionTree * tree, vector<int>& nodeTypes);
 
 //--------------------------------------------------
 // Test Methods
@@ -113,6 +114,38 @@ TEST(TreeFactory_Test, parameter_limit)
 		GetParameters(tree, parameters);
 
 		for (auto parameter : parameters) ASSERT_TRUE(parameter >= 0 && parameter < PARAM_COUNT);
+
+		ASSERT_LE(depth, DEPTH_LIMIT);
+		delete tree;
+	}
+}
+
+/**
+ * @brief Confirm that we are able to restrict nodes in the generation
+ */
+TEST(TreeFactory_Test, node_limit_test) 
+{
+	// Define variables
+	auto DEPTH_LIMIT = 4;
+	auto PARAM_COUNT = 3;
+
+	// Initialize the factory
+	auto available = vector<int> {1, 6 };
+	auto properties = new TreeProperties(available, DEPTH_LIMIT, PARAM_COUNT);
+	auto factory = TreeFactory(properties);
+
+	// Generate a solution tree
+	auto initializer = RandomInitializer(1000);
+
+	// Perform testing across 100 randomly generated expression trees
+	for (auto i = 0; i < 100; i++) 
+	{
+		auto tree = (ExpressionTree *)factory.Create(&initializer);
+		auto nodes = vector<int>();
+		auto depth = GetTreeDepth(tree);
+		GetNodeTypes(tree, nodes);
+
+		for (auto node : nodes) ASSERT_TRUE(node == 1 || node == 6);
 
 		ASSERT_LE(depth, DEPTH_LIMIT);
 		delete tree;
@@ -231,6 +264,32 @@ void GetParameters(ExpressionTree * tree, vector<int>& parameters)
 		{
 			if (node->GetType() == "parameter_node") parameters.push_back(((ParameterNode *) node)->GetParamIndex());
 
+			for (auto i = 0; i < node->GetChildCount(); i++) next.push_back(node->GetChild(i));
+		}
+
+		current.clear(); for (auto node : next) current.push_back(node); 
+	}
+}
+
+/**
+ * @brief Retrieve the types of node that make up the tree
+ * @param tree The tree that we are testing
+ * @param nodeTypes The list of node types that make up this tree
+ */
+void GetNodeTypes(ExpressionTree * tree, vector<int>& nodeTypes) 
+{
+	nodeTypes.clear();
+	
+	auto current = vector<NodeBase *>(); current.push_back(tree->GetRoot());
+
+	while (current.size() > 0) 
+	{
+		auto next = vector<NodeBase *>();
+
+		for (auto node : current) 
+		{
+			auto genes = vector<int>(); node->GetGenes(genes);
+			nodeTypes.push_back(genes[0]);
 			for (auto i = 0; i < node->GetChildCount(); i++) next.push_back(node->GetChild(i));
 		}
 

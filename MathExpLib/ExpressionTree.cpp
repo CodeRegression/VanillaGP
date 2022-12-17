@@ -16,9 +16,8 @@ using namespace NVL_AI;
 /**
  * @brief Custom Constructor
  * @param root The root node of the expression tree that makes up this solution
- * @param dna The "dna" string that characterizes this tree
  */
-ExpressionTree::ExpressionTree(NodeBase * root, const vector<int>& dna) : _root(root), SolutionBase(dna)
+ExpressionTree::ExpressionTree(NodeBase * root) : _root(root), SolutionBase()
 {
 	// Extra implementation logic can go here
 }
@@ -44,4 +43,31 @@ string ExpressionTree::GetCode()
 double ExpressionTree::Evaluate(const vector<double>& params)
 {
 	return _root->Evaluate(params);
+}
+
+//--------------------------------------------------
+// DNA builder functionality
+//--------------------------------------------------
+
+/**
+ * @brief Add the logic to build the given DNA of the tree
+ */
+void ExpressionTree::BuildDNA() 
+{
+	_dna.clear();
+
+	auto current = vector<NodeBase *>(); current.push_back(_root);
+
+	while (current.size() > 0) 
+	{
+		auto next = vector<NodeBase *>();
+
+		for (auto node : current) 
+		{
+			node->GetGenes(_dna);
+			for (auto i = 0; i < node->GetChildCount(); i++) next.push_back(node->GetChild(i));
+		}
+
+		current.clear(); for (auto node : next) current.push_back(node); 
+	}
 }

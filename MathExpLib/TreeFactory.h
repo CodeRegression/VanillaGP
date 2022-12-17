@@ -16,6 +16,7 @@ using namespace std;
 
 #include "NodeFactory.h"
 #include "TreeProperties.h"
+#include "ExpressionTree.h"
 
 namespace NVL_AI
 {
@@ -29,12 +30,12 @@ namespace NVL_AI
 		TreeFactory(TreeProperties * properties);
 		~TreeFactory();
 
-		virtual SolutionBase * Create(InitializerBase * initializer) override;
+		virtual SolutionBase * Create(InitializerBase * initializer, int level = 0) override;
 		virtual SolutionBase * Breed(InitializerBase * initializer, SolutionBase * mother, SolutionBase * father) override;
 		virtual SolutionBase * Mutate(InitializerBase * initializer, double probability) override;
 
 	private:
-		NodeBase * GenerateNode(InitializerBase * initializer, const vector<int>& available);
+		NodeBase * GenerateNode(InitializerBase * initializer, NodeFactory& factory, const vector<int>& available);
 		void InitializeNodeCollections(vector<int>& available);
 	};
 }

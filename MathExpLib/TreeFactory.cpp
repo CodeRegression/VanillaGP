@@ -20,6 +20,7 @@ using namespace NVL_AI;
 TreeFactory::TreeFactory(TreeProperties * properties)
 {
 	_properties = properties; InitializeNodeCollections(_properties->GetAvailableNodes());
+	if (_availableTerminals.size() == 0) throw runtime_error("The collection needs to include at least one terminal node");
 }
 
 /**
@@ -37,11 +38,35 @@ TreeFactory::~TreeFactory()
 /**
  * @brief Create a solution
  * @param initializer The initializer that we are going to use
+ * @param level The level that we are starting from
  * @return SolutionBase * Returns a SolutionBase 
  */
-SolutionBase * TreeFactory::Create(InitializerBase * initializer)
+SolutionBase * TreeFactory::Create(InitializerBase * initializer, int level)
 {
-	throw runtime_error("Not implemented");
+	// Initialize working variables
+	auto factory = NodeFactory(_properties->GetParamCount()); 
+	auto root = _availableFunctions.size() > 0 ? GenerateNode(initializer, factory, _availableFunctions) : GenerateNode(initializer, factory, _availableTerminals);
+	auto needChildren = vector<NodeBase *>(); if (root->GetChildCount() > 0) needChildren.push_back(root);
+
+	// Perform construction root
+	while( needChildren.size() > 0) 
+	{
+		auto nextChildren = vector<NodeBase *>();
+		for (auto node : needChildren) 
+		{
+			for (auto i = 0; i < node->GetChildCount(); i++) 
+			{
+				auto& selectSet = level < _properties->GetDepthLimit() ? _properties->GetAvailableNodes() : _availableTerminals;
+				auto child = GenerateNode(initializer, factory, selectSet);
+				node->AddChild(i, child);
+				if (child->GetChildCount() > 0) nextChildren.push_back(child); 
+			}
+			level++; needChildren.clear(); for(auto node : nextChildren) needChildren.push_back(node);
+		}
+	}
+
+	// Return the result
+	return new ExpressionTree(root);
 }
 
 //--------------------------------------------------
@@ -104,10 +129,13 @@ void TreeFactory::InitializeNodeCollections(vector<int>& available)
 /**
  * @brief Generate a node from the given available list 
  * @param initializer The initializer that we are using
+ * @param factory The node factory that we are dealing with
  * @param available The available list of nodes
  * @return NodeBase* The node that was returned
  */
-NodeBase * TreeFactory::GenerateNode(InitializerBase * initializer, const vector<int>& available) 
+NodeBase * TreeFactory::GenerateNode(InitializerBase * initializer, NodeFactory & factory, const vector<int>& available) 
 {
-	throw runtime_error("Not Implemented");
+	auto index = initializer->GetNext(0, available.size() - 1);
+	auto nodeIndex = available[index];
+	return factory.CreateNode((NodeFactory::NodeType)nodeIndex, initializer);
 }

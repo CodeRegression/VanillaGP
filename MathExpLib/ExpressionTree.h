@@ -21,13 +21,16 @@ namespace NVL_AI
 	{
 	private:
 		NodeBase * _root;
-
+		vector<int> _dna;
 	public:
-		ExpressionTree(NodeBase * root, const vector<int>& dna);
+		ExpressionTree(NodeBase * root);
 
 		virtual string GetCode() override;
 		virtual double Evaluate(const vector<double>& params) override;
-
-		inline NodeBase *& GetRoot() { return _root; }
+	
+		inline NodeBase * GetRoot() { return _root; }
+		inline vector<int> GetDNA() { if (_dna.size() == 0) BuildDNA(); return _dna; }
+	private:
+		void BuildDNA();
 	};
 }
