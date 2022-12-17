@@ -21,9 +21,9 @@ namespace NVL_AI
 		int _depthLimit;
 		int _paramCount;
 	public:
-		TreeProperties(vector<int>& availableNodes, int depthLimit, int paramCount) :
+		TreeProperties(const vector<int>& availableNodes, int depthLimit, int paramCount) :
 			_availableNodes(availableNodes), _depthLimit(depthLimit), _paramCount(paramCount) {}
-
+	
 		inline vector<int>& GetAvailableNodes() { return _availableNodes; }
 		inline int& GetDepthLimit() { return _depthLimit; }
 		inline int& GetParamCount() { return _paramCount; }
