@@ -26,7 +26,9 @@ namespace NVL_AI
 	public:
 		DNAInitializer(const vector<int>& dna);
 
-		virtual int GetNext(int minValue, int maxValue);
+		virtual int GetNext(int minValue, int maxValue) override;
+		virtual int GetNext(const vector<int>& available) override;
+		
 		void ResetPointer();
 
 		inline int& GetPosition() { return _position; }

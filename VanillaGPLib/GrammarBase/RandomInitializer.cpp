@@ -23,7 +23,7 @@ RandomInitializer::RandomInitializer(int seed)
 }
 
 //--------------------------------------------------
-// Methods
+// Retrieve Random Selections
 //--------------------------------------------------
 
 /**
@@ -36,4 +36,16 @@ int RandomInitializer::GetNext(int minValue, int maxValue)
 {
 	auto result = NVLib::RandomUtils::GetInteger(NVLib::Range(minValue, maxValue));
 	return result;
+}
+
+/**
+ * @brief Select a random element from a given range
+ * @param available The available range that we are selecting from
+ * @return int The value that we have selected from
+ */
+int RandomInitializer::GetNext(const vector<int>& available) 
+{
+	if (available.size() == 0) throw runtime_error("Cannot select from an empty group");
+	auto index = GetNext(0, available.size());
+	return available[index];
 }

@@ -26,5 +26,6 @@ namespace NVL_AI
 	public:
 		RandomInitializer(int seed);
 		virtual int GetNext(int minValue, int maxValue) override;
+		virtual int GetNext(const vector<int>& available) override;
 	};
 }

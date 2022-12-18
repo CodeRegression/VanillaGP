@@ -146,17 +146,19 @@ NodeBase * TreeFactory::BuildTree(InitializerBase * initializer, int level)
 	while( needChildren.size() > 0) 
 	{
 		auto nextChildren = vector<NodeBase *>();
+		
 		for (auto node : needChildren) 
 		{
 			for (auto i = 0; i < node->GetChildCount(); i++) 
 			{
-				auto& selectSet = level < _properties->GetDepthLimit() ? _properties->GetAvailableNodes() : _availableTerminals;
+				auto& selectSet = level < _properties->GetDepthLimit() - 1 ? _properties->GetAvailableNodes() : _availableTerminals;
 				auto child = GenerateNode(initializer, factory, selectSet);
 				node->AddChild(i, child);
 				if (child->GetChildCount() > 0) nextChildren.push_back(child); 
 			}
-			level++; needChildren.clear(); for(auto node : nextChildren) needChildren.push_back(node);
 		}
+
+		level++; needChildren.clear(); for(auto node : nextChildren) needChildren.push_back(node); nextChildren.clear();
 	}
 
 	// return the result
@@ -198,7 +200,6 @@ void TreeFactory::InitializeNodeCollections(vector<int>& available)
  */
 NodeBase * TreeFactory::GenerateNode(InitializerBase * initializer, NodeFactory & factory, const vector<int>& available) 
 {
-	auto index = initializer->GetNext(0, available.size() - 1);
-	auto nodeIndex = available[index];
+	auto nodeIndex = initializer->GetNext(available);
 	return factory.CreateNode((NodeFactory::NodeType)nodeIndex, initializer);
 }

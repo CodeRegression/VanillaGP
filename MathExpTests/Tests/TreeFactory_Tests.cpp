@@ -17,7 +17,7 @@ using namespace NVL_AI;
 //--------------------------------------------------
 
 int GetTreeDepth(NodeBase * tree);
-void GetParameters(NodeBase * tree, vector<int>& parameters);
+void GetTreeParameters(NodeBase * tree, vector<int>& parameters);
 void GetNodeTypes(NodeBase * tree, vector<int>& nodeTypes);
 
 //--------------------------------------------------
@@ -35,7 +35,7 @@ TEST(TreeFactory_Test, tree_generation)
 	auto factory = TreeFactory(properties);
 
 	// Generate a solution tree
-	auto initializer = DNAInitializer(vector<int> { 1, 4, 5, 6, 0, 2, 200, 6, 1 });
+	auto initializer = DNAInitializer(vector<int> { 1, 4, 5, 6, 0, 2, 100, 6, 1 });
 	auto solution = factory.Generate(&initializer);
 	auto tree = factory.Solution2Tree(solution);
 
@@ -51,7 +51,7 @@ TEST(TreeFactory_Test, tree_generation)
 	ASSERT_EQ(node_3->GetType(), "parameter_node");
 	ASSERT_EQ(((ParameterNode *)node_3)->GetParamIndex(), 0);
 	ASSERT_EQ(node_4->GetType(), "constant_node");
-	ASSERT_EQ(((ConstantNode *)node_4)->GetValue(), 2);
+	ASSERT_EQ(((ConstantNode *)node_4)->GetValue(), 1);
 	ASSERT_EQ(node_5->GetType(), "parameter_node");
 	ASSERT_EQ(((ParameterNode *)node_5)->GetParamIndex(), 1);
 
@@ -110,12 +110,9 @@ TEST(TreeFactory_Test, parameter_limit)
 		auto solution = factory.Generate(&initializer);
 		auto tree = factory.Solution2Tree(solution);
 		auto parameters = vector<int>();
-		auto depth = GetTreeDepth(tree);
-		GetParameters(tree, parameters);
-
+		GetTreeParameters(tree, parameters);
+		
 		for (auto parameter : parameters) ASSERT_TRUE(parameter >= 0 && parameter < PARAM_COUNT);
-
-		ASSERT_LE(depth, DEPTH_LIMIT);
 
 		delete tree; delete solution;
 	}
@@ -252,7 +249,7 @@ int GetTreeDepth(NodeBase * tree)
  * @param tree The tree that we are extracting the parameters from
  * @param parameters The the parameters that we have extracted
  */
-void GetParameters(NodeBase * tree, vector<int>& parameters) 
+void GetTreeParameters(NodeBase * tree, vector<int>& parameters) 
 {
 	parameters.clear();
 	

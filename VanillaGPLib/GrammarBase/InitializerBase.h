@@ -23,5 +23,6 @@ namespace NVL_AI
 		InitializerBase() {}
 
 		virtual int GetNext(int minValue, int maxValue) = 0;
+		virtual int GetNext(const vector<int>& available) = 0;
 	};
 }
