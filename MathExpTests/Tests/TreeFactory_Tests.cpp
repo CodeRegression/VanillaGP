@@ -156,15 +156,30 @@ TEST(TreeFactory_Test, node_limit_test)
  */
 TEST(TreeFactory_Test, no_mutation)
 {
-	FAIL() << "Not implemented";
+	// Initialize the factory
+	auto available = vector<int>(); NodeFactory::GetAllNodeTypes(available);
+	auto properties = new TreeProperties(available, 4, 3);
+	auto factory = TreeFactory(properties);
 
-	// Setup
+	// Generate a solution tree
+	auto expected_dna = vector<int> { 4, 7, 5, 6, 0, 2, 200, 6, 1 };
+	auto initializer = DNAInitializer( expected_dna );
+	auto solution = factory.Generate(&initializer);
 
-	// Execute
+	// Perform the mutation logic
+	auto mute_initializer = DNAInitializer( vector<int> { 40, 2, 1, 6, 0, 6, 1 } );
+	auto mute_solution = factory.Mutate(&mute_initializer, 0.6);
 
-	// Confirm
+	// Verify that the format is as expected
+	for (auto i = 0; i < expected_dna.size(); i++) 
+	{
+		auto expected = expected_dna[i];
+		auto actual = mute_solution->DNA[i];
+		ASSERT_EQ(expected, actual);
+	}
 
-	// Teardown
+	// Free up some working variables
+	delete solution; delete mute_solution;
 }
 
 /**
@@ -172,15 +187,31 @@ TEST(TreeFactory_Test, no_mutation)
  */
 TEST(TreeFactory_Test, mutation)
 {
-	FAIL() << "Not implemented";
+	// Initialize the factory
+	auto available = vector<int>(); NodeFactory::GetAllNodeTypes(available);
+	auto properties = new TreeProperties(available, 4, 3);
+	auto factory = TreeFactory(properties);
 
-	// Setup
+	// Generate a solution tree
+	auto original_dna = vector<int> { 4, 7, 5, 6, 0, 2, 200, 6, 1 };
+	auto initializer = DNAInitializer( original_dna );
+	auto solution = factory.Generate(&initializer);
 
-	// Execute
+	// Perform the mutation logic
+	auto mute_initializer = DNAInitializer( vector<int> { 60, 2, 1, 6, 0, 6, 1} );
+	auto mute_solution = factory.Mutate(&mute_initializer, 0.5);
+	auto expected_dna = vector<int> { 4, 7, 1, 6, 0, 2, 200, 6, 0, 6, 1 };
 
-	// Confirm
+	// Verify that the format is as expected
+	for (auto i = 0; i < original_dna.size(); i++) 
+	{
+		auto expected = expected_dna[i];
+		auto actual = mute_solution->DNA[i];
+		ASSERT_EQ(expected, actual);
+	}
 
-	// Teardown
+	// Free up some working variables
+	delete solution; delete mute_solution;
 }
 
 /**
