@@ -11,7 +11,9 @@
 #include <iostream>
 using namespace std;
 
-#include "SolutionBase.h"
+#include "Solution.h"
+
+#include "InitializerBase.h"
 
 namespace NVL_AI
 {
@@ -20,8 +22,8 @@ namespace NVL_AI
 	public:
 		SolutionFactoryBase() {}
 
-		virtual SolutionBase * Create(InitializerBase * initializer, int level) = 0;
-		virtual SolutionBase * Breed(InitializerBase * initializer, SolutionBase * mother, SolutionBase * father) = 0;
-		virtual SolutionBase * Mutate(InitializerBase * initializer, double probability) = 0;
+		virtual Solution * Generate(InitializerBase * initializer, int level) = 0;
+		virtual Solution * Breed(InitializerBase * initializer, Solution * mother, Solution * father) = 0;
+		virtual Solution * Mutate(InitializerBase * initializer, double probability) = 0;	
 	};
 }

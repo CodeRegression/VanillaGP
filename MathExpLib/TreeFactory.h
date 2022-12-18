@@ -13,10 +13,10 @@ using namespace std;
 
 #include <VanillaGPLib/GrammarBase/SolutionFactoryBase.h>
 #include <VanillaGPLib/GrammarBase/RandomInitializer.h>
+#include <VanillaGPLib/GrammarBase/DNAInitializer.h>
 
 #include "NodeFactory.h"
 #include "TreeProperties.h"
-#include "ExpressionTree.h"
 
 namespace NVL_AI
 {
@@ -30,12 +30,16 @@ namespace NVL_AI
 		TreeFactory(TreeProperties * properties);
 		~TreeFactory();
 
-		virtual SolutionBase * Create(InitializerBase * initializer, int level = 0) override;
-		virtual SolutionBase * Breed(InitializerBase * initializer, SolutionBase * mother, SolutionBase * father) override;
-		virtual SolutionBase * Mutate(InitializerBase * initializer, double probability) override;
+		virtual Solution * Generate(InitializerBase * initializer, int level = 0) override;
+		virtual Solution * Breed(InitializerBase * initializer, Solution * mother, Solution * father) override;
+		virtual Solution * Mutate(InitializerBase * initializer, double probability) override;
+
+		Solution * Tree2Solution(NodeBase * root);
+		NodeBase * Solution2Tree(Solution * solution);
 
 	private:
 		NodeBase * GenerateNode(InitializerBase * initializer, NodeFactory& factory, const vector<int>& available);
 		void InitializeNodeCollections(vector<int>& available);
+		NodeBase * BuildTree(InitializerBase * initializer, int level);
 	};
 }

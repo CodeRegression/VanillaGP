@@ -19,7 +19,6 @@ add_library (MathExpLib STATIC
 	PowerNode.cpp
 	NegateNode.cpp
 	InvertNode.cpp
-	ExpressionTree.cpp
 	TreeFactory.cpp
 )
 

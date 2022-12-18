@@ -10,18 +10,15 @@
 
 #include <MathExpLib/NodeFactory.h>
 #include <MathExpLib/TreeFactory.h>
-#include <MathExpLib/ExpressionTree.h>
-#include <VanillaGPLib/GrammarBase/RandomInitializer.h>
-#include <VanillaGPLib/GrammarBase/DNAInitializer.h>
 using namespace NVL_AI;
 
 //--------------------------------------------------
 // Function Prototypes
 //--------------------------------------------------
 
-int GetTreeDepth(ExpressionTree * tree);
-void GetParameters(ExpressionTree * tree, vector<int>& parameters);
-void GetNodeTypes(ExpressionTree * tree, vector<int>& nodeTypes);
+int GetTreeDepth(NodeBase * tree);
+void GetParameters(NodeBase * tree, vector<int>& parameters);
+void GetNodeTypes(NodeBase * tree, vector<int>& nodeTypes);
 
 //--------------------------------------------------
 // Test Methods
@@ -39,12 +36,13 @@ TEST(TreeFactory_Test, tree_generation)
 
 	// Generate a solution tree
 	auto initializer = DNAInitializer(vector<int> { 1, 4, 5, 6, 0, 2, 200, 6, 1 });
-	auto tree = (ExpressionTree *)factory.Create(&initializer);
+	auto solution = factory.Generate(&initializer);
+	auto tree = factory.Solution2Tree(solution);
 
 	// Confirm the tree shape
-	ASSERT_EQ(tree->GetRoot()->GetType(), "add_node");
-	auto node_1 = tree->GetRoot()->GetChild(0);
-	auto node_2 = tree->GetRoot()->GetChild(1);
+	ASSERT_EQ(tree->GetType(), "add_node");
+	auto node_1 = tree->GetChild(0);
+	auto node_2 = tree->GetChild(1);
 	ASSERT_EQ(node_1->GetType(), "multiply_node");
 	ASSERT_EQ(node_2->GetType(), "negate_node");
 	auto node_3 = node_1->GetChild(0);
@@ -58,7 +56,7 @@ TEST(TreeFactory_Test, tree_generation)
 	ASSERT_EQ(((ParameterNode *)node_5)->GetParamIndex(), 1);
 
 	// Free working memory
-	delete tree;
+	delete tree; delete solution;
 }
 
 /**
@@ -81,10 +79,11 @@ TEST(TreeFactory_Test, depth_limit)
 	// Perform testing across 100 randomly generated expression trees
 	for (auto i = 0; i < 100; i++) 
 	{
-		auto tree = (ExpressionTree *)factory.Create(&initializer);
+		auto solution = factory.Generate(&initializer);
+		auto tree = factory.Solution2Tree(solution); 
 		auto depth = GetTreeDepth(tree);
 		ASSERT_LE(depth, DEPTH_LIMIT);
-		delete tree;
+		delete tree; delete solution;
 	}
 }
 
@@ -108,7 +107,8 @@ TEST(TreeFactory_Test, parameter_limit)
 	// Perform testing across 100 randomly generated expression trees
 	for (auto i = 0; i < 100; i++) 
 	{
-		auto tree = (ExpressionTree *)factory.Create(&initializer);
+		auto solution = factory.Generate(&initializer);
+		auto tree = factory.Solution2Tree(solution);
 		auto parameters = vector<int>();
 		auto depth = GetTreeDepth(tree);
 		GetParameters(tree, parameters);
@@ -116,7 +116,8 @@ TEST(TreeFactory_Test, parameter_limit)
 		for (auto parameter : parameters) ASSERT_TRUE(parameter >= 0 && parameter < PARAM_COUNT);
 
 		ASSERT_LE(depth, DEPTH_LIMIT);
-		delete tree;
+
+		delete tree; delete solution;
 	}
 }
 
@@ -140,7 +141,8 @@ TEST(TreeFactory_Test, node_limit_test)
 	// Perform testing across 100 randomly generated expression trees
 	for (auto i = 0; i < 100; i++) 
 	{
-		auto tree = (ExpressionTree *)factory.Create(&initializer);
+		auto solution = factory.Generate(&initializer);
+		auto tree = factory.Solution2Tree(solution);
 		auto nodes = vector<int>();
 		auto depth = GetTreeDepth(tree);
 		GetNodeTypes(tree, nodes);
@@ -225,9 +227,9 @@ TEST(TreeFactory_Test, depth_difference_breeding)
  * @param tree The tree that we are getting values for
  * @return int The depth that was calculated
  */
-int GetTreeDepth(ExpressionTree * tree) 
+int GetTreeDepth(NodeBase * tree) 
 {
-	auto current = vector<NodeBase *>(); current.push_back(tree->GetRoot());
+	auto current = vector<NodeBase *>(); current.push_back(tree);
 	auto level = 0;
 
 	while (current.size() > 0) 
@@ -250,11 +252,11 @@ int GetTreeDepth(ExpressionTree * tree)
  * @param tree The tree that we are extracting the parameters from
  * @param parameters The the parameters that we have extracted
  */
-void GetParameters(ExpressionTree * tree, vector<int>& parameters) 
+void GetParameters(NodeBase * tree, vector<int>& parameters) 
 {
 	parameters.clear();
 	
-	auto current = vector<NodeBase *>(); current.push_back(tree->GetRoot());
+	auto current = vector<NodeBase *>(); current.push_back(tree);
 
 	while (current.size() > 0) 
 	{
@@ -276,11 +278,11 @@ void GetParameters(ExpressionTree * tree, vector<int>& parameters)
  * @param tree The tree that we are testing
  * @param nodeTypes The list of node types that make up this tree
  */
-void GetNodeTypes(ExpressionTree * tree, vector<int>& nodeTypes) 
+void GetNodeTypes(NodeBase * tree, vector<int>& nodeTypes) 
 {
 	nodeTypes.clear();
 	
-	auto current = vector<NodeBase *>(); current.push_back(tree->GetRoot());
+	auto current = vector<NodeBase *>(); current.push_back(tree);
 
 	while (current.size() > 0) 
 	{

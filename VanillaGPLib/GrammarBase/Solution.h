@@ -12,21 +12,13 @@
 #include <iostream>
 using namespace std;
 
-#include "InitializerBase.h"
-
 namespace NVL_AI
 {
-	class SolutionBase
+	struct Solution
 	{
-	private:
-		double _score;
 	public:
-		SolutionBase() : _score(-1) {}
-
-		virtual string GetCode() = 0;
-		virtual double Evaluate(const vector<double>& param) = 0;
-
-		inline double GetScore() { return _score; }
-		inline void SetScore(double value) { _score = value; }
+		double Score;
+		vector<int> DNA;
+		Solution(const vector<int> dna) : DNA(dna), Score(-1) {}
 	};
 }

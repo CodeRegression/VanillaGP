@@ -41,7 +41,101 @@ TreeFactory::~TreeFactory()
  * @param level The level that we are starting from
  * @return SolutionBase * Returns a SolutionBase 
  */
-SolutionBase * TreeFactory::Create(InitializerBase * initializer, int level)
+Solution * TreeFactory::Generate(InitializerBase * initializer, int level)
+{
+	// Build the tree
+	auto tree = BuildTree(initializer, level);
+
+	// Extract solution and return
+	auto solution = Tree2Solution(tree);
+
+	// Free the memory
+	delete tree;
+
+	// Return the solution
+	return solution;
+}
+
+//--------------------------------------------------
+// Breed Functionality
+//--------------------------------------------------
+
+/**
+ * @brief Breed two solutions to get a child
+ * @param initializer The initializer that we will use to make the choices for the breeding
+ * @param mother The `mother` of the child solution that we are creating
+ * @param father The `father` of the child solution that we are creating
+ * @return Solution * Returns a Solution
+ */
+Solution * TreeFactory::Breed(InitializerBase * initializer, Solution * mother, Solution * father)
+{
+	throw runtime_error("Not implemented");
+}
+
+//--------------------------------------------------
+// Mutate Functionality
+//--------------------------------------------------
+
+/**
+ * @brief Mutate a solution
+ * @param initializer The initailizer that we will use to make the choices for the mutation
+ * @param probability The probability that a mutation occurs
+ * @return SolutionBase * Returns a SolutionBase *
+ */
+Solution * TreeFactory::Mutate(InitializerBase * initializer, double probability)
+{
+	throw runtime_error("Not implemented");
+}
+
+//--------------------------------------------------
+// Conversion functionality
+//--------------------------------------------------
+
+/**
+ * @brief Convert a Tree into a solution
+ * @param root The root node that we are converting
+ * @return The solution that we are returning
+ */
+Solution * TreeFactory::Tree2Solution(NodeBase * root) 
+{
+	auto dna = vector<int>();
+
+	auto current = vector<NodeBase *>(); current.push_back(root);
+
+	while (current.size() > 0) 
+	{
+		auto next = vector<NodeBase *>();
+
+		for (auto node : current) 
+		{
+			node->GetGenes(dna);
+			for (auto i = 0; i < node->GetChildCount(); i++) next.push_back(node->GetChild(i));
+		}
+
+		current.clear(); for (auto node : next) current.push_back(node); 
+	}
+
+	return new Solution(dna);
+}
+
+/**
+ * @brief Functionality to convert a solution into a tree
+ * @param solution The solution that we are converting
+ * @return NodeBase* The root node of the tree that we have extracted
+ */
+NodeBase * TreeFactory::Solution2Tree(Solution * solution) 
+{
+	auto initializer = DNAInitializer(solution->DNA);
+	return BuildTree(&initializer, 0);
+}
+
+/**
+ * @brief Add the functionality to construct a tree from the given initializer
+ * @param initializer The initializer that we have been given
+ * @param level The level at which to construct the tree
+ * @return NodeBase* The resultant root node
+ */
+NodeBase * TreeFactory::BuildTree(InitializerBase * initializer, int level) 
 {
 	// Initialize working variables
 	auto factory = NodeFactory(_properties->GetParamCount()); 
@@ -65,39 +159,8 @@ SolutionBase * TreeFactory::Create(InitializerBase * initializer, int level)
 		}
 	}
 
-	// Return the result
-	return new ExpressionTree(root);
-}
-
-//--------------------------------------------------
-// Breed Functionality
-//--------------------------------------------------
-
-/**
- * @brief Breed two solutions to get a child
- * @param initializer The initializer that we will use to make the choices for the breeding
- * @param mother The `mother` of the child solution that we are creating
- * @param father The `father` of the child solution that we are creating
- * @return SolutionBase * Returns a SolutionBase
- */
-SolutionBase * TreeFactory::Breed(InitializerBase * initializer, SolutionBase * mother, SolutionBase * father)
-{
-	throw runtime_error("Not implemented");
-}
-
-//--------------------------------------------------
-// Mutate Functionality
-//--------------------------------------------------
-
-/**
- * @brief Mutate a solution
- * @param initializer The initailizer that we will use to make the choices for the mutation
- * @param probability The probability that a mutation occurs
- * @return SolutionBase * Returns a SolutionBase *
- */
-SolutionBase * TreeFactory::Mutate(InitializerBase * initializer, double probability)
-{
-	throw runtime_error("Not implemented");
+	// return the result
+	return root;
 }
 
 //--------------------------------------------------
