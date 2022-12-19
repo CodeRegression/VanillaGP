@@ -168,7 +168,7 @@ TEST(TreeFactory_Test, no_mutation)
 
 	// Perform the mutation logic
 	auto mute_initializer = DNAInitializer( vector<int> { 40, 2, 1, 6, 0, 6, 1 } );
-	auto mute_solution = factory.Mutate(&mute_initializer, 0.6);
+	auto mute_solution = factory.Mutate(&mute_initializer, solution, 0.6);
 
 	// Verify that the format is as expected
 	for (auto i = 0; i < expected_dna.size(); i++) 
@@ -199,7 +199,7 @@ TEST(TreeFactory_Test, mutation)
 
 	// Perform the mutation logic
 	auto mute_initializer = DNAInitializer( vector<int> { 60, 2, 1, 6, 0, 6, 1} );
-	auto mute_solution = factory.Mutate(&mute_initializer, 0.5);
+	auto mute_solution = factory.Mutate(&mute_initializer, solution, 0.5);
 	auto expected_dna = vector<int> { 4, 7, 1, 6, 0, 2, 200, 6, 0, 6, 1 };
 
 	// Verify that the format is as expected

@@ -24,6 +24,6 @@ namespace NVL_AI
 
 		virtual Solution * Generate(InitializerBase * initializer, int level) = 0;
 		virtual Solution * Breed(InitializerBase * initializer, Solution * mother, Solution * father) = 0;
-		virtual Solution * Mutate(InitializerBase * initializer, double probability) = 0;	
+		virtual Solution * Mutate(InitializerBase * initializer, Solution * solution, double probability) = 0;	
 	};
 }

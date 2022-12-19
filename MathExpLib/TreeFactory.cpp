@@ -79,10 +79,11 @@ Solution * TreeFactory::Breed(InitializerBase * initializer, Solution * mother, 
 /**
  * @brief Mutate a solution
  * @param initializer The initailizer that we will use to make the choices for the mutation
+ * @param solution The solution that we are working with
  * @param probability The probability that a mutation occurs
  * @return SolutionBase * Returns a SolutionBase *
  */
-Solution * TreeFactory::Mutate(InitializerBase * initializer, double probability)
+Solution * TreeFactory::Mutate(InitializerBase * initializer, Solution * solution, double probability)
 {
 	throw runtime_error("Not implemented");
 }

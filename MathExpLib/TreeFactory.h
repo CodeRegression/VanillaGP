@@ -32,7 +32,7 @@ namespace NVL_AI
 
 		virtual Solution * Generate(InitializerBase * initializer, int level = 0) override;
 		virtual Solution * Breed(InitializerBase * initializer, Solution * mother, Solution * father) override;
-		virtual Solution * Mutate(InitializerBase * initializer, double probability) override;
+		virtual Solution * Mutate(InitializerBase * initializer, Solution * solution, double probability) override;
 
 		Solution * Tree2Solution(NodeBase * root);
 		NodeBase * Solution2Tree(Solution * solution);
