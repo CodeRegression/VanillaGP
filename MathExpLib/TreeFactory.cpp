@@ -85,7 +85,53 @@ Solution * TreeFactory::Breed(InitializerBase * initializer, Solution * mother, 
  */
 Solution * TreeFactory::Mutate(InitializerBase * initializer, Solution * solution, double probability)
 {
-	throw runtime_error("Not implemented");
+	// Check to see if we should do anything
+	auto spin = initializer->GetNext(0, 100); auto spinProb = spin / 100.0;
+	if (spinProb > probability) return new Solution(solution->DNA);
+	
+	// Extract a tree
+	auto tree = Solution2Tree(solution);
+
+	// Get the nodes
+	auto nodes = vector<NodeBase *>(); auto levels = vector<int>(); ExtractNodes(tree, nodes, levels);
+
+	// Select the node that we want to replace
+	auto nodeIndex = initializer->GetNext(0, nodes.size());
+	
+	// Get the node and the parent
+	auto node = nodes[nodeIndex]; auto parent = node->GetParent(); auto childIndex = node->GetChildIndex();
+	if (parent == nullptr) return new Solution(solution->DNA);
+
+	// Generate a new subtree
+	auto newNode = BuildTree(initializer, levels[nodeIndex]);
+	parent->AddChild(childIndex, newNode);
+	
+	// Extract the solution and return
+	return Tree2Solution(tree);
+}
+
+/**
+ * @brief Add the functionality to extract nodes
+ * @param tree The tree that we are getting the nodes for
+ * @param nodes The nodes that we have extracted
+ * @param levels The levels associated with each node
+ */
+void TreeFactory::ExtractNodes(NodeBase* tree, vector<NodeBase *>& nodes, vector<int>& levels) 
+{
+	auto current = vector<NodeBase *>(); current.push_back(tree); auto level = 0;
+
+	while (current.size() > 0) 
+	{
+		auto next = vector<NodeBase *>();
+
+		for (auto node : current) 
+		{
+			nodes.push_back(node); levels.push_back(level);
+			for (auto i = 0; i < node->GetChildCount(); i++) next.push_back(node->GetChild(i));
+		}
+
+		current.clear(); for (auto node : next) current.push_back(node); level++;
+	}
 }
 
 //--------------------------------------------------
@@ -140,7 +186,8 @@ NodeBase * TreeFactory::BuildTree(InitializerBase * initializer, int level)
 {
 	// Initialize working variables
 	auto factory = NodeFactory(_properties->GetParamCount()); 
-	auto root = _availableFunctions.size() > 0 ? GenerateNode(initializer, factory, _availableFunctions) : GenerateNode(initializer, factory, _availableTerminals);
+	auto &initialSet = (_availableFunctions.size() == 0 || level >= _properties->GetDepthLimit()) ? _availableTerminals : _availableFunctions;
+	auto root = GenerateNode(initializer, factory, initialSet);
 	auto needChildren = vector<NodeBase *>(); if (root->GetChildCount() > 0) needChildren.push_back(root);
 
 	// Perform construction root

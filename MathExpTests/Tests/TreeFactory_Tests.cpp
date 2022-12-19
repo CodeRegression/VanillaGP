@@ -19,6 +19,7 @@ using namespace NVL_AI;
 int GetTreeDepth(NodeBase * tree);
 void GetTreeParameters(NodeBase * tree, vector<int>& parameters);
 void GetNodeTypes(NodeBase * tree, vector<int>& nodeTypes);
+void ShowSolution(Solution * solution);
 
 //--------------------------------------------------
 // Test Methods
@@ -168,7 +169,7 @@ TEST(TreeFactory_Test, no_mutation)
 
 	// Perform the mutation logic
 	auto mute_initializer = DNAInitializer( vector<int> { 40, 2, 1, 6, 0, 6, 1 } );
-	auto mute_solution = factory.Mutate(&mute_initializer, solution, 0.6);
+	auto mute_solution = factory.Mutate(&mute_initializer, solution, 0.2);
 
 	// Verify that the format is as expected
 	for (auto i = 0; i < expected_dna.size(); i++) 
@@ -198,7 +199,7 @@ TEST(TreeFactory_Test, mutation)
 	auto solution = factory.Generate(&initializer);
 
 	// Perform the mutation logic
-	auto mute_initializer = DNAInitializer( vector<int> { 60, 2, 1, 6, 0, 6, 1} );
+	auto mute_initializer = DNAInitializer( vector<int> { 10, 2, 1, 6, 0, 6, 1} );
 	auto mute_solution = factory.Mutate(&mute_initializer, solution, 0.5);
 	auto expected_dna = vector<int> { 4, 7, 1, 6, 0, 2, 200, 6, 0, 6, 1 };
 
@@ -215,19 +216,61 @@ TEST(TreeFactory_Test, mutation)
 }
 
 /**
+ * @brief Confirm that the depth limit is respected for mutation
+ */
+TEST(TreeFactory_Test, mutation_depth) 
+{
+	// Define variables
+	auto DEPTH_LIMIT = 4;
+	auto PARAM_COUNT = 3;
+
+	// Initialize the factory
+	auto available = vector<int>(); NodeFactory::GetAllNodeTypes(available);
+	auto properties = new TreeProperties(available, DEPTH_LIMIT, PARAM_COUNT);
+	auto factory = TreeFactory(properties);
+
+	// Generate a solution tree
+	auto initializer = RandomInitializer(1000);
+
+	// Perform testing across 100 randomly generated expression trees
+	for (auto i = 0; i < 100; i++) 
+	{
+		auto solution = factory.Generate(&initializer);
+		auto mute_solution = factory.Mutate(&initializer, solution, 1.0);
+		ShowSolution(solution);
+		ShowSolution(mute_solution);
+		auto tree = factory.Solution2Tree(mute_solution); 
+		auto depth = GetTreeDepth(tree);
+		ASSERT_LE(depth, DEPTH_LIMIT);
+		delete tree; delete solution; delete mute_solution;
+	}
+}
+
+/**
  * @brief Confirm controlled breeding
  */
 TEST(TreeFactory_Test, controlled_breeding)
 {
-	FAIL() << "Not implemented";
+	// Initialize the factory
+	auto available = vector<int>(); NodeFactory::GetAllNodeTypes(available);
+	auto properties = new TreeProperties(available, 4, 3);
+	auto factory = TreeFactory(properties);
 
-	// Setup
+	// Create parents
+	auto mother = Solution(vector<int> { 1, 4, 6, 0, 6, 1, 2, -200 } );
+	auto father = Solution(vector<int> { 7, 1, 5, 6, 0, 6, 1, 6, 2} );
 
-	// Execute
+	// Perform the breeding
+	auto breedCode = DNAInitializer( vector<int> { 0, 1, 1, 0, 0 } );
+	auto child = factory.Breed( &breedCode, &mother, &father);
 
-	// Confirm
+	// Verify
+	auto expected = vector<int> { 1, 1, 5, 6, 1, 2, -200, 6, 2};
+	ASSERT_EQ(child->DNA.size(), expected.size());
+	for (auto i = 0; i < expected.size(); i++) ASSERT_EQ(expected[i], child->DNA[i]);
 
-	// Teardown
+	// Clean up
+	delete child;
 }
 
 /**
@@ -235,15 +278,58 @@ TEST(TreeFactory_Test, controlled_breeding)
  */
 TEST(TreeFactory_Test, depth_difference_breeding)
 {
-	FAIL() << "Not implemented";
+	// Initialize the factory
+	auto available = vector<int>(); NodeFactory::GetAllNodeTypes(available);
+	auto properties = new TreeProperties(available, 6, 4);
+	auto factory = TreeFactory(properties);
 
-	// Setup
+	// Create parents
+	auto mother = Solution(vector<int> { 1, 4, 3, 6, 0, 6, 1, 6, 2 } );
+	auto father = Solution(vector<int> { 5, 3, 1, 6, 0, 7, 6, 2, 6, 3 } );
 
-	// Execute
+	// Perform the breeding
+	auto breedCode = DNAInitializer( vector<int> { 0, 0, 1, 1, 1, 1, 6, 0, 6, 1 } );
+	auto child = factory.Breed( &breedCode, &mother, &father);
 
-	// Confirm
+	// Verify
+	auto expected = vector<int> { 1, 4, 1, 6, 0, 7, 6, 2, 6, 3, 6, 0, 6, 1 };
+	ASSERT_EQ(child->DNA.size(), expected.size());
+	for (auto i = 0; i < expected.size(); i++) ASSERT_EQ(expected[i], child->DNA[i]);
 
-	// Teardown
+	// Clean up
+	delete child;
+}
+
+/**
+ * @brief Confirm that depth values are consistency the values that they should be
+ */
+TEST(TreeFactory_Test, depth_consistency_testing) 
+{
+		// Define variables
+	auto DEPTH_LIMIT = 5;
+	auto PARAM_COUNT = 3;
+
+	// Initialize the factory
+	auto available = vector<int>(); NodeFactory::GetAllNodeTypes(available);
+	auto properties = new TreeProperties(available, DEPTH_LIMIT, PARAM_COUNT);
+	auto factory = TreeFactory(properties);
+
+	// Generate a solution tree
+	auto initializer = RandomInitializer(1000);
+
+	// Perform testing across 100 randomly generated expression trees
+	for (auto i = 0; i < 100; i++) 
+	{
+		auto mother = factory.Generate(&initializer);
+		auto father = factory.Generate(&initializer);
+		auto child = factory.Breed(&initializer, mother, father);
+
+		auto tree = factory.Solution2Tree(child); 
+		auto depth = GetTreeDepth(tree);
+		ASSERT_LE(depth, DEPTH_LIMIT);
+
+		delete tree; delete mother; delete father; delete child;
+	}
 }
 
 //--------------------------------------------------
@@ -325,4 +411,17 @@ void GetNodeTypes(NodeBase * tree, vector<int>& nodeTypes)
 
 		current.clear(); for (auto node : next) current.push_back(node); 
 	}
+}
+
+/**
+ * @brief Show the solution on the screen
+ * @param solution The solution that we are showing
+ */
+void ShowSolution(Solution * solution) 
+{
+	for (auto i = 0; i < solution->DNA.size(); i++) 
+	{
+		cout << solution->DNA[i] << " ";
+	}
+	cout << endl;
 }

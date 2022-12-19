@@ -44,7 +44,7 @@ namespace NVL_AI
 
 		static void GetAllNodeTypes(vector<int>& nodeSet) 
 		{
-			for (int i = (int)NodeType::ADD_NODE; i != (int)NodeType::POWER_NODE; i++)
+			for (int i = (int)NodeType::ADD_NODE; i <= (int)NodeType::POWER_NODE; i++)
 			{
 				nodeSet.push_back(i);
 			}
