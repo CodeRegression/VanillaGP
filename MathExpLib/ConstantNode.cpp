@@ -62,3 +62,12 @@ void ConstantNode::GetGenes(vector<int>& dna)
 {
 	dna.push_back(2); dna.push_back(_originalValue);
 }
+
+/**
+ * @brief Clone this node
+ * @return NodeBase* The newly generated node
+ */
+NodeBase* ConstantNode::Clone() 
+{
+	return new ConstantNode(_originalValue);
+}

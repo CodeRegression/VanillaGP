@@ -69,7 +69,92 @@ Solution * TreeFactory::Generate(InitializerBase * initializer, int level)
  */
 Solution * TreeFactory::Breed(InitializerBase * initializer, Solution * mother, Solution * father)
 {
-	throw runtime_error("Not implemented");
+	// Setup a factory (in case we need it)
+	auto factory = NodeFactory(_properties->GetParamCount()); 
+
+	// Get the mother and father trees
+	auto motherTree = Solution2Tree(mother);
+	auto fatherTree = Solution2Tree(father);
+
+	// Get the mother and father node lists
+	auto motherNodes = vector<NodeBase *>(); auto motherLevels = vector<int>(); ExtractNodes(motherTree, motherNodes, motherLevels);
+	auto fatherNodes = vector<NodeBase *>(); auto fatherLevels = vector<int>(); ExtractNodes(fatherTree, fatherNodes, fatherLevels);
+	if (motherNodes.size() == 0 || fatherNodes.size() == 0) throw runtime_error("Empty tree passed to the breed function");
+
+	// Pick the root node
+	auto nodeIndex = 0;
+	auto rootChoice = initializer->GetNext(0, 2); if (rootChoice == 2) throw runtime_error("Invalid root choice");
+	auto root = rootChoice == 0 ? motherNodes[nodeIndex]->Clone() : fatherNodes[nodeIndex]->Clone(); nodeIndex++;
+	auto needChildren = vector<NodeBase *>(); if (root->GetChildCount() > 0) needChildren.push_back(root);
+
+	// Setup the level
+	auto level = 0;
+
+	// Perform construction root
+	while( needChildren.size() > 0) 
+	{
+		auto nextChildren = vector<NodeBase *>();
+		
+		for (auto node : needChildren) 
+		{
+			for (auto i = 0; i < node->GetChildCount(); i++) 
+			{
+				auto child = ChooseNode(initializer, nodeIndex, factory, motherNodes, fatherNodes);
+
+				if (level >= _properties->GetDepthLimit() - 1 && node->GetChildCount() != 0) 
+				{
+					delete child; child = GenerateNode(initializer, factory, _availableTerminals);
+				}
+
+				//cout << "Selected Node: " << node->GetType() << endl;
+				//cout << "Selected Child: " << child->GetType() << " at index " << i << endl;
+
+				node->AddChild(i, child);
+				if (child->GetChildCount() > 0) nextChildren.push_back(child); 
+			}
+		}
+
+		level++; needChildren.clear(); for(auto node : nextChildren) needChildren.push_back(node); nextChildren.clear();
+	}
+
+	// Free Memory
+	delete motherTree; delete fatherTree;
+
+	// return the result
+	auto solution = Tree2Solution(root); delete root;
+	return solution;
+}
+
+/**
+ * @brief Add the functionality to choose a new node from the system
+ * @param initializer The initializer The generator of random numbers for the system
+ * @param factory The factory for generating new nodes for the system
+ * @param motherNodes The mother nodes 
+ * @param fatherNodes The father nodes
+ * @return NodeBase* The selected node
+ */
+NodeBase * TreeFactory::ChooseNode(InitializerBase * initializer, int& nodeIndex, NodeFactory& factory, const vector<NodeBase *>& motherNodes, const vector<NodeBase *>& fatherNodes) 
+{
+	if (nodeIndex < motherNodes.size() && nodeIndex < fatherNodes.size()) 
+	{
+		auto choose = initializer->GetNext(0, 2); if (choose == 2) throw runtime_error("Invalid Choice!");
+		auto& result = choose == 0 ? motherNodes[nodeIndex] : fatherNodes[nodeIndex]; nodeIndex++;
+		return result->Clone();
+	}
+	else if (nodeIndex >= motherNodes.size() && nodeIndex < fatherNodes.size()) 
+	{
+		auto result = fatherNodes[nodeIndex]; nodeIndex++;
+		return result->Clone();
+	}
+	else if (nodeIndex < motherNodes.size() && nodeIndex >= fatherNodes.size()) 
+	{
+		auto result = motherNodes[nodeIndex]; nodeIndex++;
+		return result->Clone();
+	}
+	else 
+	{
+		return GenerateNode(initializer, factory, _properties->GetAvailableNodes());
+	}
 }
 
 //--------------------------------------------------
@@ -107,7 +192,8 @@ Solution * TreeFactory::Mutate(InitializerBase * initializer, Solution * solutio
 	parent->AddChild(childIndex, newNode);
 	
 	// Extract the solution and return
-	return Tree2Solution(tree);
+	auto result = Tree2Solution(tree); delete tree;
+	return result;
 }
 
 /**
@@ -118,7 +204,7 @@ Solution * TreeFactory::Mutate(InitializerBase * initializer, Solution * solutio
  */
 void TreeFactory::ExtractNodes(NodeBase* tree, vector<NodeBase *>& nodes, vector<int>& levels) 
 {
-	auto current = vector<NodeBase *>(); current.push_back(tree); auto level = 0;
+	auto current = vector<NodeBase *>(); current.push_back(tree); auto level = 0; nodes.clear();
 
 	while (current.size() > 0) 
 	{
@@ -126,8 +212,14 @@ void TreeFactory::ExtractNodes(NodeBase* tree, vector<NodeBase *>& nodes, vector
 
 		for (auto node : current) 
 		{
+			//cout << node->GetType() << endl;
 			nodes.push_back(node); levels.push_back(level);
-			for (auto i = 0; i < node->GetChildCount(); i++) next.push_back(node->GetChild(i));
+			for (auto i = 0; i < node->GetChildCount(); i++) 
+			{
+				auto child = node->GetChild(i);
+				if (child == nullptr) throw runtime_error("Child is not initialized!");
+				next.push_back(child);
+			}
 		}
 
 		current.clear(); for (auto node : next) current.push_back(node); level++;

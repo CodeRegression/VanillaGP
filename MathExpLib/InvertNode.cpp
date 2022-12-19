@@ -67,3 +67,12 @@ void InvertNode::GetGenes(vector<int>& dna)
 {
 	dna.push_back(3);
 }
+
+/**
+ * @brief Clone this node
+ * @return NodeBase* The newly generated node
+ */
+NodeBase* InvertNode::Clone() 
+{
+	return new InvertNode();
+}

@@ -67,3 +67,12 @@ void NegateNode::GetGenes(vector<int>& dna)
 {
 	dna.push_back(5);
 }
+
+/**
+ * @brief Clone this node
+ * @return NodeBase* The newly generated node
+ */
+NodeBase* NegateNode::Clone() 
+{
+	return new NegateNode();
+}

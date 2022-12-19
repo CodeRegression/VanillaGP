@@ -31,6 +31,7 @@ namespace NVL_AI
 		virtual string GetCode();
 		virtual string GetType();
 		virtual void GetGenes(vector<int>& dna) override;
+		virtual NodeBase* Clone() override;
 
 		inline double& GetValue() { return _value; }
 	};

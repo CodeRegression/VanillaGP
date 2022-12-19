@@ -69,3 +69,12 @@ void PowerNode::GetGenes(vector<int>& dna)
 {
 	dna.push_back(7);
 }
+
+/**
+ * @brief Clone this node
+ * @return NodeBase* The newly generated node
+ */
+NodeBase* PowerNode::Clone() 
+{
+	return new PowerNode();
+}

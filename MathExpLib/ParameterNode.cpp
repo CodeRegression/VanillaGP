@@ -65,3 +65,12 @@ void ParameterNode::GetGenes(vector<int>& dna)
 {
 	dna.push_back(6); dna.push_back(_paramIndex);
 }
+
+/**
+ * @brief Clone this node
+ * @return NodeBase* The newly generated node
+ */
+NodeBase* ParameterNode::Clone() 
+{
+	return new ParameterNode(_paramIndex);
+}

@@ -28,6 +28,7 @@ namespace NVL_AI
 			virtual string GetCode() override;
 			virtual string GetType() override;
 			virtual void GetGenes(vector<int>& dna) override;
+			virtual NodeBase* Clone() override;
 
 			inline int& GetParamIndex() { return _paramIndex; }
 	};

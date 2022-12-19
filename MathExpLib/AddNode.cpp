@@ -69,3 +69,12 @@ void AddNode::GetGenes(vector<int>& dna)
 {
 	dna.push_back(1);
 }
+
+/**
+ * @brief Clone this node
+ * @return NodeBase* The newly generated node
+ */
+NodeBase* AddNode::Clone() 
+{
+	return new AddNode();
+}

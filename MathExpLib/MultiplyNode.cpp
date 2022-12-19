@@ -69,3 +69,12 @@ void MultiplyNode::GetGenes(vector<int>& dna)
 {
 	dna.push_back(4);
 }
+
+/**
+ * @brief Clone this node
+ * @return NodeBase* The newly generated node
+ */
+NodeBase* MultiplyNode::Clone() 
+{
+	return new MultiplyNode();
+}

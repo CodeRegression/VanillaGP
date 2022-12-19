@@ -42,5 +42,6 @@ namespace NVL_AI
 		void InitializeNodeCollections(vector<int>& available);
 		NodeBase * BuildTree(InitializerBase * initializer, int level);
 		void ExtractNodes(NodeBase* tree, vector<NodeBase *>& nodes, vector<int>& levels);
+		NodeBase * ChooseNode(InitializerBase * initializer, int& nodeIndex, NodeFactory& factory, const vector<NodeBase *>& motherNodes, const vector<NodeBase *>& fatherNodes);
 	};
 }
