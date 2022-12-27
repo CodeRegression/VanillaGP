@@ -16,4 +16,6 @@ add_library (VanillaGPLib STATIC
 	ArgUtils.cpp
 	Socket.cpp
 	CodeDash.cpp
+	ProblemLoader.cpp
 )
+

@@ -22,8 +22,10 @@ set_target_properties(UnitTestLib PROPERTIES
 # Create the executable
 add_executable (VanillaGPTests
 	Tests/DNAInitializer_Tests.cpp
-    Tests/CodeDash_Tests.cpp
+	Tests/CodeDash_Tests.cpp
+	Tests/ProblemLoader_Tests.cpp
 )
+
 
 # Add link libraries
 target_link_libraries(VanillaGPTests VanillaGPLib NVLib ${OpenCV_LIBS} UnitTestLib GTest::Main)
