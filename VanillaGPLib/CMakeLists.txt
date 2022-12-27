@@ -14,4 +14,6 @@ add_library (VanillaGPLib STATIC
 	GrammarBase/RandomInitializer.cpp
 	GrammarBase/DNAInitializer.cpp
 	ArgUtils.cpp
+	Socket.cpp
+	CodeDash.cpp
 )

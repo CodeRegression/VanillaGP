@@ -1,4 +1,6 @@
 <?xml version="1.0"?>
 <opencv_storage>
-    <parameter_1>"9"</parameter_1>
+<parameter_1>"9"</parameter_1>
+<problem_code>P_1</problem_code>
+<problem_file>/home/trevor/Work/Research/SymReg/VanillaGP/Resources/Input/2C2DFCBBB98241BD9177CB878B6EEA6.arff</problem_file>
 </opencv_storage>

@@ -22,6 +22,7 @@ set_target_properties(UnitTestLib PROPERTIES
 # Create the executable
 add_executable (VanillaGPTests
 	Tests/DNAInitializer_Tests.cpp
+    Tests/CodeDash_Tests.cpp
 )
 
 # Add link libraries
