@@ -24,7 +24,9 @@ add_executable (VanillaGPTests
 	Tests/DNAInitializer_Tests.cpp
 	Tests/CodeDash_Tests.cpp
 	Tests/ProblemLoader_Tests.cpp
+	Tests/AlgorithmLoader_Tests.cpp
 )
+
 
 # Add link libraries
 target_link_libraries(VanillaGPTests VanillaGPLib NVLib ${OpenCV_LIBS} UnitTestLib uuid OpenSSL::SSL GTest::Main)

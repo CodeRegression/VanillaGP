@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+
+<class>
+
+<namespace>NVL_AI</namespace>
+<solution>VanillaGPLib</solution>
+<name>AlgorithmLoader</name>
+<description>Verifies the algorithm details as per the database</description>
+
+<includes>
+    <include name="iostream" namespace="std" local="false" />
+    <include name="CodeDash.h" local="true" />
+</includes>
+
+<variables>
+    <variable type="int" name="id" code="10" />
+    <variable type="string" name="code" code="10" />
+    <variable type="string" name="name" code="10" />
+    <variable type="string" name="details" code="10" />
+    <variable type="string" name="program" code="10" />
+    <variable type="string" name="evaluation" code="10" />
+    <variable type="string" name="grammar" code="10" />
+    <variable type="string" name="version" code="10" />
+</variables>
+
+<constructors>
+
+    <constructor type="custom" inline="false">
+        <parameter type="const string&" name="code" description="The code of the algorithm that we are using" />
+    </constructor>
+
+</constructors>
+
+<methods>
+
+    <method section="Loader" access="public" return="void" name="Load" description="Invokes of a load of the details" inline="false">
+        <parameter type="CodeDash *" name="codeDash" description="A link to the server via the code_dash interface" />
+    </method>    
+
+</methods>
+
+<tests>
+    <test name="invalid_code" description="Handles the case that an invalid algorithm code was used" exception="true" />
+    <test name="valid_load" description="Confirm the case of a valid application load" exception="false" />
+</tests> 
+
+</class>
