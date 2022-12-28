@@ -33,6 +33,9 @@ set_target_properties(NVLib PROPERTIES
 find_package( OpenCV REQUIRED)
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
+# Add a link to OpenSSL to the project
+find_package(OpenSSL REQUIRED)
+
 # Add the available subfolders
 add_subdirectory(VanillaGPLib)
 add_subdirectory(VanillaGPTests)

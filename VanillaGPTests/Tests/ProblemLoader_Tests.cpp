@@ -21,7 +21,7 @@ using namespace NVL_AI;
 TEST(ProblemLoader_Test, invalid_problem)
 {
 	// Setup
-	auto expected = string("Invalid Problem Code");
+	auto expected = string("Unable to find problem code");
 
 	// Execute
 	try
@@ -48,7 +48,7 @@ TEST(ProblemLoader_Test, invalid_problem)
 TEST(ProblemLoader_Test, missing_file)
 {
 	// Setup
-	auto expected = string("Invalid data file");
+	auto expected = string("Unable to find the provided data file");
 
 	// Execute
 	try
@@ -75,7 +75,7 @@ TEST(ProblemLoader_Test, missing_file)
 TEST(ProblemLoader_Test, invalid_hash)
 {
 	// Setup
-	auto expected = string("Invalid data file - please download the proper one");
+	auto expected = string("The data file does not appear to be valid - please download the proper one");
 
 	// Execute
 	try

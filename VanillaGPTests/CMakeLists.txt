@@ -26,9 +26,8 @@ add_executable (VanillaGPTests
 	Tests/ProblemLoader_Tests.cpp
 )
 
-
 # Add link libraries
-target_link_libraries(VanillaGPTests VanillaGPLib NVLib ${OpenCV_LIBS} UnitTestLib GTest::Main)
+target_link_libraries(VanillaGPTests VanillaGPLib NVLib ${OpenCV_LIBS} UnitTestLib uuid OpenSSL::SSL GTest::Main)
 
 # Find the associated unit tests
 gtest_discover_tests(VanillaGPTests)
