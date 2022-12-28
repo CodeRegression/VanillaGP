@@ -111,7 +111,14 @@ void CodeDash::FailSession(int sessionId, const string& message)
  */
 string CodeDash::GetSessionState(int sessionId) 
 {
-	throw runtime_error("Not Implemented");
+	auto parameters = unordered_map<string, string>();
+	parameters["operation"] = "SESSION_STATUS";
+	parameters["session"] = NVLib::StringUtils::Int2String(sessionId);
+	auto response = FireRequest(parameters);
+
+	if (response.Error != string()) throw runtime_error(response.Error);
+
+	return response.Message;
 }
 
 //--------------------------------------------------
