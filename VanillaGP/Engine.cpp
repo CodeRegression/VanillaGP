@@ -80,4 +80,35 @@ void Engine::Run()
     _sessionId = _codeDash->CreateSession(algorithmCode, problemCode, _machineName);
     _logger->Log(1, "Created Session: %i", _sessionId);
 
+    _logger->Log(1, "Starting the control loop");
+    _codeDash->StartSession(_sessionId);
+    ControlLoop();
+}
+
+/**
+ * @brief Start the control loop
+ */
+void Engine::ControlLoop() 
+{
+    while (true) 
+    {
+        _logger->Log(1, "Polling Session State");
+        auto state = _codeDash->GetSessionState(_sessionId);
+
+        if (state == "STOP") 
+        {
+            _logger->Log(1, "Session Paused - waiting a second and then trying again");
+            sleep(1);
+            continue;
+        }
+        else if (state != "START") 
+        {
+            _logger->Log(1, "Session is no longer running - ending session");
+            _sessionId = -1;
+            break;
+        }
+
+        _logger->Log(1, "Normal Work Cycle Happens for session: %i", _sessionId);
+        sleep(1);
+    }
 }

@@ -36,5 +36,7 @@ namespace NVL_App
 		~Engine();
 
 		void Run();
+	private:
+		void ControlLoop();
 	};
 }
