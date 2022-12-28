@@ -12,7 +12,9 @@
 using namespace std;
 
 #include <NVLib/Logger.h>
+
 #include <VanillaGPLib/ArgUtils.h>
+#include <VanillaGPLib/ProblemLoader.h>
 
 namespace NVL_App
 {
@@ -21,6 +23,11 @@ namespace NVL_App
 	private:
 		NVLib::Parameters * _parameters;
 		NVLib::Logger* _logger;
+
+		NVL_AI::ProblemLoader * _problem;
+		NVL_AI::CodeDash * _codeDash;
+
+		string _machineName;
 	public:
 		Engine(NVLib::Logger* logger, NVLib::Parameters * parameters);
 		~Engine();
