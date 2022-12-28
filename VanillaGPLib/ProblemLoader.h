@@ -29,8 +29,10 @@ namespace NVL_AI
 		string _name;
 		string _description;
 		string _file;
+		string _fileHash;
 		Mat _data;
 
+		NVLib::ARFFReader * _reader;
 	public:
 		ProblemLoader(const string& problemCode, const string& dataFile);
 		~ProblemLoader();
@@ -42,6 +44,8 @@ namespace NVL_AI
 		inline string& GetName() { return _name; }
 		inline string& GetDescription() { return _description; }
 		inline string& GetFile() { return _file; }
+		inline string& GetFileHash() { return _fileHash; }
 		inline Mat& GetData() { return _data; }
+		inline NVLib::ARFFHeader * GetFileHeader() { return _reader->GetHeader(); }
 	};
 }
