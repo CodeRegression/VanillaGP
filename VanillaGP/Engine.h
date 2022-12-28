@@ -15,6 +15,7 @@ using namespace std;
 
 #include <VanillaGPLib/ArgUtils.h>
 #include <VanillaGPLib/ProblemLoader.h>
+#include <VanillaGPLib/AlgorithmLoader.h>
 
 namespace NVL_App
 {
@@ -25,6 +26,7 @@ namespace NVL_App
 		NVLib::Logger* _logger;
 
 		NVL_AI::ProblemLoader * _problem;
+		NVL_AI::AlgorithmLoader * _algorithm;
 		NVL_AI::CodeDash * _codeDash;
 
 		string _machineName;
