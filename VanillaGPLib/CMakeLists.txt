@@ -19,5 +19,3 @@ add_library (VanillaGPLib STATIC
 	ProblemLoader.cpp
 	AlgorithmLoader.cpp
 )
-
-

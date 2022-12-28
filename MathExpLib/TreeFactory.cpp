@@ -227,6 +227,20 @@ void TreeFactory::ExtractNodes(NodeBase* tree, vector<NodeBase *>& nodes, vector
 }
 
 //--------------------------------------------------
+// Generate a calculator for the system
+//--------------------------------------------------
+
+/**
+ * @brief Generate a calculator for the system
+ * @param params The parameters that we are calculating against
+ * @return CalculatorBase The generated calculator
+ */
+CalculatorBase * TreeFactory::GetCalculator(Mat& params) 
+{
+	return new TreeCalculator(params);
+}
+
+//--------------------------------------------------
 // Conversion functionality
 //--------------------------------------------------
 

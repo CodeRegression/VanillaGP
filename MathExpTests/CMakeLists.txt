@@ -30,6 +30,7 @@ add_executable (MathExpTests
 	Tests/NegateNode_Tests.cpp
 	Tests/InvertNode_Tests.cpp
 	Tests/TreeFactory_Tests.cpp
+	Tests/TreeCalculator_Tests.cpp
 )
 
 

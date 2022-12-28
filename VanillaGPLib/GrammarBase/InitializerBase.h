@@ -12,9 +12,6 @@
 #include <vector>
 using namespace std;
 
-#include <iostream>
-using namespace std;
-
 namespace NVL_AI
 {
 	class InitializerBase
