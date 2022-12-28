@@ -296,6 +296,26 @@ string CodeDash::GetSolutions(const string& problemCode, const string& grammar, 
 	return response.Message;
 }
 
+//--------------------------------------------------
+// Algorithms
+//--------------------------------------------------
+
+/**
+ * @brief Retrieve the algorithm details
+ * @param algorithmCode The code associated with the algorithm
+ * @return string The details of the algorithm
+ */
+string CodeDash::GetAlgorithmDetails(const string& algorithmCode) 
+{
+	auto parameters = unordered_map<string, string>();
+	parameters["operation"] = "ALGORITHM_DETAILS";
+	parameters["code"] = algorithmCode;
+	auto response = FireRequest(parameters);
+
+	if (response.Error != string()) throw runtime_error(response.Error);
+	
+	return response.Message;
+}
 
 //--------------------------------------------------
 // Communication Helper
@@ -340,7 +360,7 @@ CodeDash::Response CodeDash::FireRequest(const unordered_map<string, string>& pa
     {
         string buffer;
         sock->socket_read(buffer, 1024);
-        // cout << buffer << endl;
+        cout << buffer << endl;
 		return Parse(buffer);
     }
 }

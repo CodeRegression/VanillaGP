@@ -17,9 +17,10 @@ using namespace NVL_AI;
  * @brief Custom Constructor
  * @param code The code of the algorithm that we are using
  */
-AlgorithmLoader::AlgorithmLoader(const string& code)
-{
-	throw runtime_error("Not implemented");
+AlgorithmLoader::AlgorithmLoader(const string& code) : _code(code)
+{	
+	_id = -1; _name = string(); _details = string(); _program = string();
+	_evaluation = string(); _grammar = string(); _version = string();
 }
 
 //--------------------------------------------------
@@ -32,5 +33,15 @@ AlgorithmLoader::AlgorithmLoader(const string& code)
  */
 void AlgorithmLoader::Load(CodeDash * codeDash)
 {
-	throw runtime_error("Not implemented");
+	auto details = codeDash->GetAlgorithmDetails(_code);
+
+	auto parts = vector<string>(); NVLib::StringUtils::Split(details, ',', parts);
+
+	_id = NVLib::StringUtils::String2Int(parts[0]);
+	_name = parts[1];
+	_details = parts[2];
+	_program = parts[3];
+	_evaluation = parts[4];
+	_grammar = parts[5];
+	_version = parts[6];
 }

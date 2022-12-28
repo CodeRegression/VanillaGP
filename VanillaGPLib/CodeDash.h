@@ -58,6 +58,8 @@ namespace NVL_AI
 		int AddSolution(const string& problemCode, const string& dna, double score, const string& grammar, int depth);
 		string GetSolutions(const string& problemCode, const string& grammar, int depthLimit, int rowLimit);
 
+		string GetAlgorithmDetails(const string& algorithmCode);
+
 		static CodeDash::Response Parse(const string& value);
 	private:
 		CodeDash::Response FireRequest(const unordered_map<string, string>& parameters);

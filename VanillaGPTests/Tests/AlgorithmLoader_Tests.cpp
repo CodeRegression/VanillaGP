@@ -21,12 +21,14 @@ using namespace NVL_AI;
 TEST(AlgorithmLoader_Test, invalid_code)
 {
 	// Setup
-	auto expected = string("Not implemented");
+	auto expected = string("Invalid algorithm code");
 
 	// Execute
 	try
 	{
-		// TODO: Add call here
+		auto codeDash = CodeDash("127.0.0.1", "/codedash/", "80");
+		auto algorithm = AlgorithmLoader("Invalid Algorithm");
+		algorithm.Load(&codeDash);
 		FAIL() << "Expected exception: " << expected;
 	}
 	catch(runtime_error exception)
@@ -44,13 +46,18 @@ TEST(AlgorithmLoader_Test, invalid_code)
  */
 TEST(AlgorithmLoader_Test, valid_load)
 {
-	FAIL() << "Not implemented";
-
 	// Setup
-
-	// Execute
+	auto codeDash = CodeDash("127.0.0.1", "/codedash/", "80");
+	auto algorithm = AlgorithmLoader("ETREE_C");
+	algorithm.Load(&codeDash);
 
 	// Confirm
-
-	// Teardown
+	ASSERT_EQ(algorithm.GetId(), 1);
+	ASSERT_EQ(algorithm.GetCode(), "ETREE_C");
+	ASSERT_EQ(algorithm.GetName(), "Basic Continuous Tree");
+	ASSERT_EQ(algorithm.GetDetails(), "Basic Syntax Expression Tree with Continuous Evaluation");
+	ASSERT_EQ(algorithm.GetProgram(), "VanillaGP");
+	ASSERT_EQ(algorithm.GetEvaluation(), "EUCLID");
+	ASSERT_EQ(algorithm.GetGrammar(), "ETREE");
+	ASSERT_EQ(algorithm.GetVersion(), "1.00");
 }
