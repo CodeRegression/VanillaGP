@@ -43,6 +43,7 @@ namespace NVL_AI
 		void PauseSession(int sessionId);
 		void EndSession(int sessionId);
 		void FailSession(int sessionId, const string& message);
+		string GetSessionState(int sessionId);
 
 		void UpdateScore(int sessionId, int epoch, double score);
 		void UpdateSolution(int sessionId, const string& solution);

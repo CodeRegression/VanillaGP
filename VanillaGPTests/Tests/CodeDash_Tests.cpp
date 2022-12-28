@@ -62,3 +62,19 @@ TEST(CodeDash_Test, invalid_problem_retrieval)
         FAIL() << "Expected Exception: " << message;
     }
 }
+
+/**
+ * @brief Validate the session state retrieval process
+ */
+TEST(CodeDash_Test, session_state_retrieval) 
+{
+    auto dash = CodeDash("127.0.0.1", "/codedash/", "80");
+    auto sessionId = dash.CreateSession("ETREE_C", "Test_Problem", "unit_test");
+    ASSERT_EQ(dash.GetSessionState(sessionId), "CREATE");
+    dash.StartSession(sessionId);
+    ASSERT_EQ(dash.GetSessionState(sessionId), "START");
+    dash.PauseSession(sessionId);
+    ASSERT_EQ(dash.GetSessionState(sessionId), "STOP");
+    dash.EndSession(sessionId);
+    ASSERT_EQ(dash.GetSessionState(sessionId), "END");
+}

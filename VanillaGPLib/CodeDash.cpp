@@ -104,6 +104,16 @@ void CodeDash::FailSession(int sessionId, const string& message)
 	if (response.Error != string()) throw runtime_error(response.Error);
 }
 
+/**
+ * @brief Retrieve the current session state
+ * @param sessionId The current session id
+ * @return string The string state code
+ */
+string CodeDash::GetSessionState(int sessionId) 
+{
+	throw runtime_error("Not Implemented");
+}
+
 //--------------------------------------------------
 // Update
 //--------------------------------------------------
