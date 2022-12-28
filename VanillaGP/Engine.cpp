@@ -23,6 +23,9 @@ Engine::Engine(NVLib::Logger* logger, NVLib::Parameters* parameters)
     // Basic initialization
     _logger = logger; _parameters = parameters; _problem = nullptr; _algorithm = nullptr;
 
+    // Initialize the size
+    _sessionId = -1;
+
     // Load up code_dash here
     _logger->Log(1, "Connecting to the server machine");
     _machineName = ArgUtils::GetString(_parameters, "machine");
@@ -40,10 +43,15 @@ Engine::Engine(NVLib::Logger* logger, NVLib::Parameters* parameters)
  */
 Engine::~Engine() 
 {
-    delete _parameters; 
-    delete _codeDash;
+    // Close the session (if it has not been closed already)
+    if (_sessionId != -1) _codeDash->EndSession(_sessionId);
+
+    // Free loaded entities
     if (_problem != nullptr) delete _problem;
     if (_algorithm != nullptr) delete _algorithm;
+
+    // Free parameters and code dash
+    delete _parameters;  delete _codeDash;
 }
 
 //--------------------------------------------------
@@ -68,7 +76,8 @@ void Engine::Run()
     _logger->Log(1, "Grammar to be used: %s", _algorithm->GetGrammar().c_str());
     _logger->Log(1, "Evaluator to be used: %s", _algorithm->GetEvaluation().c_str());
 
-    //_logger->Log(1, "Creating a session");
-    //_codeDash->CreateSession()
+    _logger->Log(1, "Creating a session");
+    _sessionId = _codeDash->CreateSession(algorithmCode, problemCode, _machineName);
+    _logger->Log(1, "Created Session: %i", _sessionId);
 
 }

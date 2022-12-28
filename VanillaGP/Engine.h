@@ -30,6 +30,7 @@ namespace NVL_App
 		NVL_AI::CodeDash * _codeDash;
 
 		string _machineName;
+		int _sessionId;
 	public:
 		Engine(NVLib::Logger* logger, NVLib::Parameters * parameters);
 		~Engine();
