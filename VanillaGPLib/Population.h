@@ -36,7 +36,7 @@ namespace NVL_AI
 		int _generationLimit;
 		int _sameScoreLimit;
 		bool _solutionFound;
-
+		double _lastBestScore;
 	public:
 		Population(SolutionFactoryBase * factory, CodeDash * codeDash, const string& problemCode, const string& evaluation, int populationSize, int generationLimit, int sameScoreLimit, double reuseRatio);
 		~Population();
@@ -55,11 +55,10 @@ namespace NVL_AI
 		inline int& GetSameScoreLimit() { return _sameScoreLimit; }
 		inline bool GetSolutionFound() { return _solutionFound; }
 
-		inline void SetGeneration(int value) { _generation = value; }
-		inline void SetSameScore(int value) { _sameScore = value; }
-	
+		inline void SetGeneration(int value) { _generation = value; }	
 	private:
 		void LoadCodeDashPopulation(const string& problemCode, const string& grammar, const string& evaluation, int depth, int size);
 		void FillPopulation(int size);
+		void UpdateBest(Solution * solution, int retainCount);
 	};
 }

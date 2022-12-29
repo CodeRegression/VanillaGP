@@ -31,6 +31,7 @@ Population::Population(SolutionFactoryBase * factory, CodeDash * codeDash, const
 	_generation = 0;
 	_sameScore = 0;
 	_solutionFound = false;
+	_lastBestScore = DBL_MAX;
 
 	// Load the "reuse" population from CodeDash
 	auto reuseSize = (int)ceil(populationSize * reuseRatio);
@@ -95,7 +96,54 @@ Population::~Population()
  */
 void Population::Evaluate(EvaluatorBase * evaluator, int retainCount)
 {
-	throw runtime_error("Not implemented");
+	_bestSolutions.clear();
+
+	for (auto solution : _population) 
+	{
+		evaluator->Eval(solution);
+		UpdateBest(solution, retainCount);
+	}
+
+	if (retainCount >= 0) 
+	{
+		_solutionFound = abs(evaluator->GetOptimalScore() - _bestSolutions[0]->Score) < 1e-4;
+		auto lastBestMatch = abs(_lastBestScore - _bestSolutions[0]->Score) < 1e-4;
+		if (lastBestMatch) _sameScore++;
+		else 
+		{
+			_lastBestScore = _bestSolutions[0]->Score;
+			_sameScore = 1;
+		}
+	}
+}
+
+/**
+ * @brief Defines the logic to update the best solution
+ * @param solution The solution that we are adding
+ * @param retainCount The size that the list needs to be
+ */
+void Population::UpdateBest(Solution * solution, int retainCount) 
+{
+	if (retainCount <= 0) return;
+
+	auto elementAdded = false;
+	for (auto i = 0; i < _bestSolutions.size(); i++) 
+	{
+		auto current = _bestSolutions[i];
+		if (solution->Score < current->Score) 
+		{
+			_bestSolutions.insert(_bestSolutions.begin() + i, solution);
+			elementAdded = true;
+			break;
+		}
+	}
+
+	if (!elementAdded) _bestSolutions.push_back(solution);
+
+	if (_bestSolutions.size() > retainCount) 
+	{
+		_bestSolutions.erase(_bestSolutions.begin() + _bestSolutions.size() - 1);
+	}
 }
 
 //--------------------------------------------------
@@ -121,5 +169,8 @@ void Population::NextGeneration(double mutate)
  */
 bool Population::Terminate()
 {
-	throw runtime_error("Not implemented");
+	if (_generation >= _generationLimit) return true;
+	else if (_sameScore >= _sameScoreLimit) return true;
+	else if (_solutionFound) return true;
+	else return false;
 }
