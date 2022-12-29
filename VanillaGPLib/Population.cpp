@@ -158,12 +158,60 @@ void Population::UpdateBest(Solution * solution, int retainCount)
  */
 void Population::NextGeneration(double mutate, int tournamentSize, InitializerBase * initializer)
 {
+	// Make sure that we have an active initializer
 	auto freeInitializer = false;
 	if (initializer == nullptr) { initializer = new RandomInitializer(time(0)); freeInitializer = true; }
 	
-	throw runtime_error("Not implemented");
+	// Add the retain list to the next generation and lookup set
+	auto next = vector<Solution *>(); auto retainSet = unordered_set<Solution *>();
+	for (auto solution : _bestSolutions) { next.push_back(solution); retainSet.insert(solution); }
 
+	// Top the next generation using breeding selection
+	while (next.size() < _population.size()) 
+	{
+		PerformBreed(initializer, next, tournamentSize, mutate);
+	}
+
+	// Free the old generation -> set to new generation
+	for (auto solution : _population) 
+	{
+		if (retainSet.find(solution) != retainSet.end()) continue;
+		delete solution;
+	}
+	_population.clear(); for (auto solution : next) _population.push_back(solution);
+
+	// Update the generation counter
+	_generation++;
+
+	// If we need to free the initializer -> then perform the free operation
 	if (freeInitializer) delete initializer;
+}
+
+/**
+ * @brief Perform the breeding operation
+ * @param initializer The associated initializer
+ * @param next The next generation that we are "topping" up
+ * @param tournamentSize The tournament size
+ * @param mutate The probability of mutation
+ */
+void Population::PerformBreed(InitializerBase * initializer, vector<Solution*>& next, int tournamentSize, double mutate) 
+{
+	Solution * mother = nullptr; Solution* father = nullptr;
+
+	for (auto i = 0; i < tournamentSize; i++) 
+	{
+		auto index = initializer->GetNext(0, _population.size());
+		auto selection = _population[index];
+
+		if (mother == nullptr) mother = selection;
+		else if (father == nullptr) father = selection;
+		else if (father->Score > selection->Score) father = selection;
+		else if (mother->Score > selection->Score) mother = selection;
+	}
+
+	auto child = _factory->Breed(initializer, mother, father);
+	auto mchild = _factory->Mutate(initializer, child, mutate); delete child;
+	next.push_back(mchild);
 }
 
 //--------------------------------------------------

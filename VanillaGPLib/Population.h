@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <iostream>
+#include <unordered_set>
 using namespace std;
 
 #include <opencv2/opencv.hpp>
@@ -60,5 +61,6 @@ namespace NVL_AI
 		void LoadCodeDashPopulation(const string& problemCode, const string& grammar, const string& evaluation, int depth, int size);
 		void FillPopulation(int size);
 		void UpdateBest(Solution * solution, int retainCount);
+		void PerformBreed(InitializerBase * initializer, vector<Solution *>& next, int tournamentSize, double mutate);
 	};
 }
