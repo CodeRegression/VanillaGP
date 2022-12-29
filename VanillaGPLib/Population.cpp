@@ -61,7 +61,7 @@ void Population::LoadCodeDashPopulation(const string& problemCode, const string&
 		_population.push_back(new Solution(dna));
 	}
 }
-
+ 
 /**
  * @brief Use the factory to generate random members of the population
  * @param size The size of the population we are generation
@@ -153,10 +153,17 @@ void Population::UpdateBest(Solution * solution, int retainCount)
 /**
  * @brief Creates the next generation
  * @param mutate The percentage of elements to mutate
+ * @param tournamentSize The size of the selection tournament
+ * @param initializer Add a custom initializer to the system
  */
-void Population::NextGeneration(double mutate)
+void Population::NextGeneration(double mutate, int tournamentSize, InitializerBase * initializer)
 {
+	auto freeInitializer = false;
+	if (initializer == nullptr) { initializer = new RandomInitializer(time(0)); freeInitializer = true; }
+	
 	throw runtime_error("Not implemented");
+
+	if (freeInitializer) delete initializer;
 }
 
 //--------------------------------------------------

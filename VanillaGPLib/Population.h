@@ -42,7 +42,7 @@ namespace NVL_AI
 		~Population();
 
 		void Evaluate(EvaluatorBase * evaluator, int retainCount);
-		void NextGeneration(double mutate);
+		void NextGeneration(double mutate, int tournamentSize, InitializerBase * initializer = nullptr);
 		bool Terminate();
 
 		inline SolutionFactoryBase * GetFactory() { return _factory; }
