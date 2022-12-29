@@ -294,17 +294,19 @@ int CodeDash::AddSolution(const string& problemCode, const string& dna, double s
  * @brief Retrieve related solutions for what we are looking for
  * @param problemCode The code of the problem that we are adding
  * @param grammar The grammar associated with the solution space
+ * @param evaluation The evaluation system that we are aiming to use
  * @param depthLimit The depth limit that we want to apply to the solutions
  * @param rowLimit The row limit in the population of solutions that we are gathering
  * @return string The list of solutions as a string
  */
-string CodeDash::GetSolutions(const string& problemCode, const string& grammar, int depthLimit, int rowLimit) 
+string CodeDash::GetSolutions(const string& problemCode, const string& grammar, const string& evaluation, int depthLimit, int rowLimit) 
 {
 	auto parameters = unordered_map<string, string>();
 
 	parameters["operation"] = "GET_SOLUTIONS";
 	parameters["code"] = problemCode;
 	parameters["grammar"] = grammar;
+	parameters["eval"] = evaluation;
 	parameters["depth"] = NVLib::Formatter() << depthLimit;
 	parameters["row_limit"] = NVLib::Formatter() << rowLimit;
 
@@ -377,7 +379,7 @@ CodeDash::Response CodeDash::FireRequest(const unordered_map<string, string>& pa
     {
         string buffer;
         sock->socket_read(buffer, 1024);
-        //cout << buffer << endl;
+        cout << buffer << endl;
 		return Parse(buffer);
     }
 }

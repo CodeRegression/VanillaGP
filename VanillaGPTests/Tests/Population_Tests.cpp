@@ -16,22 +16,6 @@ using namespace NVL_AI;
 //--------------------------------------------------
 
 /**
- * @brief Confirms that the generation process worked as expected
- */
-TEST(Population_Test, generation_check)
-{
-	FAIL() << "Not implemented";
-
-	// Setup
-
-	// Execute
-
-	// Confirm
-
-	// Teardown
-}
-
-/**
  * @brief Confirms that we are able to retain the best results
  */
 TEST(Population_Test, best_evaluation_retention)

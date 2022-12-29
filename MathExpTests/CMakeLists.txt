@@ -31,17 +31,8 @@ add_executable (MathExpTests
 	Tests/InvertNode_Tests.cpp
 	Tests/TreeFactory_Tests.cpp
 	Tests/TreeCalculator_Tests.cpp
+	Tests/Population_Tests.cpp
 )
-
-
-
-
-
-
-
-
-
-
 
 # Add link libraries
 target_link_libraries(MathExpTests MathExpLib VanillaGPLib NVLib ${OpenCV_LIBS} UnitTestLib GTest::Main)

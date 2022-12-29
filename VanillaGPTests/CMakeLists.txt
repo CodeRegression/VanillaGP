@@ -29,9 +29,6 @@ add_executable (VanillaGPTests
 	Tests/Population_Tests.cpp
 )
 
-
-
-
 # Add link libraries
 target_link_libraries(VanillaGPTests VanillaGPLib NVLib ${OpenCV_LIBS} UnitTestLib uuid OpenSSL::SSL GTest::Main)
 

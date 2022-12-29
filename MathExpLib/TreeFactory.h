@@ -37,6 +37,9 @@ namespace NVL_AI
 
 		virtual CalculatorBase * GetCalculator(Mat& params) override;
 
+		virtual string GetGrammarName() override { return "ETREE"; }
+		virtual int GetDepthLimit() { return _properties->GetDepthLimit(); }
+
 		Solution * Tree2Solution(NodeBase * root);
 		NodeBase * Solution2Tree(Solution * solution);
 

@@ -15,9 +15,12 @@ using namespace std;
 #include <opencv2/opencv.hpp>
 using namespace cv;
 
+#include <NVLib/StringUtils.h>
+
 #include "CodeDash.h"
 #include "EvalEngine/EvaluatorBase.h"
 #include "GrammarBase/SolutionFactoryBase.h"
+#include "GrammarBase/RandomInitializer.h"
 
 namespace NVL_AI
 {
@@ -35,7 +38,7 @@ namespace NVL_AI
 		bool _solutionFound;
 
 	public:
-		Population(SolutionFactoryBase * factory, CodeDash * codeDash, int populationSize, int generationLimit, int sameScoreLimit, double reuseRatio);
+		Population(SolutionFactoryBase * factory, CodeDash * codeDash, const string& problemCode, const string& evaluation, int populationSize, int generationLimit, int sameScoreLimit, double reuseRatio);
 		~Population();
 
 		void Evaluate(EvaluatorBase * evaluator, int retainCount);
@@ -54,5 +57,9 @@ namespace NVL_AI
 
 		inline void SetGeneration(int value) { _generation = value; }
 		inline void SetSameScore(int value) { _sameScore = value; }
+	
+	private:
+		void LoadCodeDashPopulation(const string& problemCode, const string& grammar, const string& evaluation, int depth, int size);
+		void FillPopulation(int size);
 	};
 }
