@@ -68,6 +68,19 @@ Mat EuclidEvaluator::GetParams()
 }
 
 //--------------------------------------------------
+// What is the optimal score?
+//--------------------------------------------------
+
+/**
+ * @brief Retrieve the optimal score for this "phase"
+ * @return double The optimal score that we are getting
+ */
+double EuclidEvaluator::GetOptimalScore() 
+{
+	return 0;
+}
+
+//--------------------------------------------------
 // Helper Methods
 //--------------------------------------------------
 

@@ -26,7 +26,9 @@ add_executable (VanillaGPTests
 	Tests/ProblemLoader_Tests.cpp
 	Tests/AlgorithmLoader_Tests.cpp
 	Tests/EuclidEvaluator_Tests.cpp
+	Tests/Population_Tests.cpp
 )
+
 
 
 

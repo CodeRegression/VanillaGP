@@ -19,4 +19,5 @@ add_library (VanillaGPLib STATIC
 	CodeDash.cpp
 	ProblemLoader.cpp
 	AlgorithmLoader.cpp
+	Population.cpp
 )
