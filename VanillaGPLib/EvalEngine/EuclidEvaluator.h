@@ -21,7 +21,7 @@ namespace NVL_AI
 		Mat _params;
 		Mat _expected;
 	public:
-		EuclidEvaluator(NVLib::ARFFHeader * header, Mat& data);
+		EuclidEvaluator(NVLib::ARFFHeader * header, const Mat& data);
 		
 		virtual double Eval(Solution * solution) override;
 		virtual Mat GetParams() override;

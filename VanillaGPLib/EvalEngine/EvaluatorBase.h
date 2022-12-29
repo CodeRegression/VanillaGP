@@ -27,8 +27,8 @@ namespace NVL_AI
 		NVLib::ARFFHeader * _header;
 		Mat _data;
 	public:
-		EvaluatorBase(NVLib::ARFFHeader * header, Mat& data) : _calculator(nullptr), _header(header), _data(data) {}
-		~EvaluatorBase() { delete _calculator; }
+		EvaluatorBase(NVLib::ARFFHeader * header, const Mat& data) : _calculator(nullptr), _header(header), _data(data) {}
+		~EvaluatorBase() { if (_calculator != nullptr) delete _calculator; }
 
 		virtual double Eval(Solution * solution) = 0;
 		virtual Mat GetParams() = 0;

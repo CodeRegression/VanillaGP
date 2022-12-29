@@ -18,7 +18,7 @@ using namespace NVL_AI;
  * @param header The header that we are getting
  * @param data The data that we are evaluating against
  */
-EuclidEvaluator::EuclidEvaluator(NVLib::ARFFHeader * header, Mat& data) : EvaluatorBase(header, data)
+EuclidEvaluator::EuclidEvaluator(NVLib::ARFFHeader * header, const Mat& data) : EvaluatorBase(header, data)
 {
 	if (!header->GetHasOutput()) throw runtime_error("This is a continuous evaluator - an output field is required!");
 	BuildParameters(); BuildExpected();
