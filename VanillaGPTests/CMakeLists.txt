@@ -25,7 +25,9 @@ add_executable (VanillaGPTests
 	Tests/CodeDash_Tests.cpp
 	Tests/ProblemLoader_Tests.cpp
 	Tests/AlgorithmLoader_Tests.cpp
+	Tests/EuclidEvaluator_Tests.cpp
 )
+
 
 
 # Add link libraries

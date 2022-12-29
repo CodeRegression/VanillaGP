@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+
+<class base="EvaluatorBase">
+
+<namespace>NVL_AI</namespace>
+<solution>VanillaGPLib</solution>
+<name>EuclidEvaluator</name>
+<description>An evaluator that uses the Euclidean distance norm</description>
+
+<includes>
+    <include name="iostream" namespace="std" local="false" />
+    <include name="EvaluatorBase.h" local="true" />
+</includes>
+
+<constructors>
+
+    <!-- The constructor that we are dealing with -->
+    <constructor type="custom" inline="false">
+        <parameter type="CalculatorBase *" name="calculator" description="The calculator that we are using" />
+        <parameter type="ARFFHeader *" name="header" description="The header that we are getting" />
+        <parameter type="Mat&" name="data" description="The data that we are evaluating against" />
+    </constructor>
+
+</constructors>
+
+<methods>
+    <method section="Evaluation" modifiers="virtual" access="public" return="double" name="Eval" description="Evaluate the fitness of a given solution" inline="false">
+        <parameter type="Solution *" name="solution" description="The solution that we are evaluating" />
+    </method>    
+</methods>
+
+<tests>
+    <test name="evaluation_test" description="Confirm that the evaluation works" exception="false" />
+</tests> 
+
+</class>

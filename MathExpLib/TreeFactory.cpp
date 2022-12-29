@@ -237,7 +237,7 @@ void TreeFactory::ExtractNodes(NodeBase* tree, vector<NodeBase *>& nodes, vector
  */
 CalculatorBase * TreeFactory::GetCalculator(Mat& params) 
 {
-	return new TreeCalculator(params);
+	return new TreeCalculator(this, params);
 }
 
 //--------------------------------------------------

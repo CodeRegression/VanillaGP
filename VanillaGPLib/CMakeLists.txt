@@ -13,6 +13,7 @@ include_directories("../" "${LIBRARY_BASE}/NVLib")
 add_library (VanillaGPLib STATIC
 	GrammarBase/RandomInitializer.cpp
 	GrammarBase/DNAInitializer.cpp
+	EvalEngine/EuclidEvaluator.cpp
 	ArgUtils.cpp
 	Socket.cpp
 	CodeDash.cpp

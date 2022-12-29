@@ -15,9 +15,10 @@ using namespace NVL_AI;
 
 /**
  * @brief Main Constructor
+ * @param factory The factory that we are using
  * @param params Input parameters
  */
-TreeCalculator::TreeCalculator(Mat& params) : CalculatorBase(params)
+TreeCalculator::TreeCalculator(SolutionFactoryBase * factory, Mat& params) : CalculatorBase(factory, params)
 {
     // Extra implementation can go here
 }
@@ -28,13 +29,12 @@ TreeCalculator::TreeCalculator(Mat& params) : CalculatorBase(params)
 
 /**
  * @brief Evaluation function for a solution goes here
- * @param factory A factory for conversion purposes
  * @param solution The solution that we are evaluating
  * @return Mat The resultant solution
  */
-Mat TreeCalculator::Eval(SolutionFactoryBase * factory, Solution * solution) 
+Mat TreeCalculator::Eval(Solution * solution) 
 {
-    auto treeFactory = (TreeFactory *) factory;
+    auto treeFactory = (TreeFactory *) GetFactory();
     auto tree = treeFactory->Solution2Tree(solution);
     auto input = (double *) GetParams().data;
 

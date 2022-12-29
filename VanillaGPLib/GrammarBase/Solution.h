@@ -19,6 +19,6 @@ namespace NVL_AI
 	public:
 		double Score;
 		vector<int> DNA;
-		Solution(const vector<int> dna) : DNA(dna), Score(-1) {}
+		Solution(const vector<int>& dna) : DNA(dna), Score(-1) {}
 	};
 }

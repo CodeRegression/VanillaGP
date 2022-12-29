@@ -24,11 +24,15 @@ namespace NVL_AI
 	{
     private:
         Mat _params;
+        SolutionFactoryBase * _factory;
     public:
-		CalculatorBase(Mat& params) : _params(params) {}
+		CalculatorBase(SolutionFactoryBase* factory, Mat& params) : _params(params), _factory(factory) {}
 
-		virtual Mat Eval(SolutionFactoryBase * factory, Solution * solution) = 0;
+		virtual Mat Eval(Solution * solution) = 0;
     protected:
         inline Mat& GetParams() { return _params; }
+        inline SolutionFactoryBase * GetFactory() { return _factory; }
+        inline int Rows() { return _params.rows; }
+        inline int Cols() { return _params.cols; }
 	};
 }

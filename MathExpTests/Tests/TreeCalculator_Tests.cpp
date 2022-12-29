@@ -35,7 +35,7 @@ TEST(TreeCalculator_Test, basic_calculation)
 
     // Fire off the calculator and get the result
     auto calculator = factory.GetCalculator(params);
-    Mat result = calculator->Eval(&factory, solution);
+    Mat result = calculator->Eval(solution);
     auto output = (double *) result.data;
 
     // Confirm the result
