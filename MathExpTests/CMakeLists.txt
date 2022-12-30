@@ -32,7 +32,9 @@ add_executable (MathExpTests
 	Tests/TreeFactory_Tests.cpp
 	Tests/TreeCalculator_Tests.cpp
 	Tests/Population_Tests.cpp
+	Tests/TreeRenderer_Tests.cpp
 )
+
 
 # Add link libraries
 target_link_libraries(MathExpTests MathExpLib VanillaGPLib NVLib ${OpenCV_LIBS} UnitTestLib GTest::Main)

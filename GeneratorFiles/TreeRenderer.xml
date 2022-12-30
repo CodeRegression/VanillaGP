@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+
+<class base="RendererBase">
+
+<namespace>NVL_AI</namespace>
+<solution>MathExpLib</solution>
+<name>TreeRenderer</name>
+<description>Add the logic to render trees</description>
+
+<includes>
+    <include name="iostream" namespace="std" local="false" />
+    <include name="VanillaGPLib/Grammar/RendererBase.h" local="false" />
+</includes>
+
+<constructors>
+
+    <constructor type="custom" inline="false">
+        <parameter type="SolutionFactoryBase *" name="factory" description="The factory for reconstruction purposes" />
+    </constructor>
+
+</constructors>
+
+<methods>
+
+    <method section="Render" modifiers="virtual" access="public" return="string" name="Render" description="Render the solution" inline="false">
+        <parameter type="Solution *" name="solution" description="The solution that we are rendering" />
+    </method>    
+</methods>
+
+<tests>
+    <test name="basic_render_test" description="Perform a basic render test" exception="false" />
+</tests> 
+
+</class>

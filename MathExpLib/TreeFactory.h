@@ -18,6 +18,7 @@ using namespace std;
 #include "NodeFactory.h"
 #include "TreeProperties.h"
 #include "TreeCalculator.h"
+#include "TreeRenderer.h"
 
 namespace NVL_AI
 {
@@ -36,6 +37,7 @@ namespace NVL_AI
 		virtual Solution * Mutate(InitializerBase * initializer, Solution * solution, double probability) override;
 
 		virtual CalculatorBase * GetCalculator(Mat& params) override;
+		virtual RendererBase * GetRenderer() override;
 
 		virtual string GetGrammarName() override { return "ETREE"; }
 		virtual int GetDepthLimit() { return _properties->GetDepthLimit(); }

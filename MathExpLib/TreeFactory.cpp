@@ -241,6 +241,19 @@ CalculatorBase * TreeFactory::GetCalculator(Mat& params)
 }
 
 //--------------------------------------------------
+// Generate a renderer for the system
+//--------------------------------------------------
+
+/**
+ * @brief Defines a renderer for the system
+ * @return RendererBase* The renderer that we are returning
+ */
+RendererBase * TreeFactory::GetRenderer() 
+{
+	return new TreeRenderer(this);
+}
+
+//--------------------------------------------------
 // Conversion functionality
 //--------------------------------------------------
 

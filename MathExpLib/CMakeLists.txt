@@ -21,4 +21,5 @@ add_library (MathExpLib STATIC
 	InvertNode.cpp
 	TreeFactory.cpp
 	TreeCalculator.cpp
+	TreeRenderer.cpp
 )

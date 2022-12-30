@@ -13,12 +13,14 @@ using namespace std;
 
 #include "Solution.h"
 #include "CalculatorBase.h"
+#include "RendererBase.h"
 
 #include "InitializerBase.h"
 
 namespace NVL_AI
 {
 	class CalculatorBase; // For circular reference
+	class RendererBase; // For circular reference
 
 	class SolutionFactoryBase
 	{
@@ -30,6 +32,7 @@ namespace NVL_AI
 		virtual Solution * Mutate(InitializerBase * initializer, Solution * solution, double probability) = 0;
 
 		virtual CalculatorBase * GetCalculator(Mat& params) = 0;
+		virtual RendererBase * GetRenderer() = 0;
 
 		virtual string GetGrammarName() = 0;
 		virtual int GetDepthLimit() = 0;	

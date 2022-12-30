@@ -59,6 +59,7 @@ public:
 	}
 	
 	virtual CalculatorBase * GetCalculator(Mat& params) override { return nullptr; }
+	virtual RendererBase * GetRenderer() override { return nullptr; }
 	virtual string GetGrammarName() override { return "test_grammar"; }
 	virtual int GetDepthLimit() override {return 1; };	
 };
