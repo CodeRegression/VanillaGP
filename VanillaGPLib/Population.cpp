@@ -56,6 +56,8 @@ void Population::LoadCodeDashPopulation(const string& problemCode, const string&
 	auto response = _codeDash->GetSolutions(problemCode, grammar, evaluation, depth, size);
 	auto lines = vector<string>(); NVLib::StringUtils::Split(response, '|', lines);
 
+	// cout << response << endl;
+
 	for (auto& line : lines) 
 	{
 		if (line == string()) continue;
@@ -127,7 +129,7 @@ void Population::Evaluate(EvaluatorBase * evaluator, int retainCount)
  */
 void Population::UpdateBest(Solution * solution, int retainCount) 
 {
-	if (retainCount <= 0) return;
+	if (retainCount <= 0 || isnan(solution->Score)) return;
 
 	auto elementAdded = false;
 	for (auto i = 0; i < _bestSolutions.size(); i++) 
@@ -202,11 +204,15 @@ void Population::PerformBreed(InitializerBase * initializer, vector<Solution*>& 
 		auto index = initializer->GetNext(0, _population.size());
 		auto selection = _population[index];
 
+		if (isnan(selection->Score) || isinf(selection->Score)) continue;
+
 		if (mother == nullptr) mother = selection;
 		else if (father == nullptr) father = selection;
 		else if (father->Score > selection->Score) father = selection;
 		else if (mother->Score > selection->Score) mother = selection;
 	}
+
+	if (mother == nullptr || father == nullptr) return; // No valid parents found this round!
 
 	auto child = _factory->Breed(initializer, mother, father);
 	auto mchild = _factory->Mutate(initializer, child, mutate); delete child;

@@ -381,7 +381,7 @@ CodeDash::Response CodeDash::FireRequest(const unordered_map<string, string>& pa
     else
     {
         string buffer;
-        sock->socket_read(buffer, 1024);
+        sock->socket_read(buffer, 3 * 1024);
         //cout << buffer << endl;
 		return Parse(buffer);
     }
