@@ -13,6 +13,8 @@ using namespace std;
 
 #include <VanillaGPLib/GrammarBase/RendererBase.h>
 
+#include "TreeFactory.h"
+
 namespace NVL_AI
 {
 	class TreeRenderer : public RendererBase

@@ -19,7 +19,7 @@ using namespace NVL_AI;
  */
 TreeRenderer::TreeRenderer(SolutionFactoryBase * factory) : RendererBase(factory)
 {
-	throw runtime_error("Not implemented");
+	// Extra implementation can go here
 }
 
 //--------------------------------------------------
@@ -33,5 +33,12 @@ TreeRenderer::TreeRenderer(SolutionFactoryBase * factory) : RendererBase(factory
  */
 string TreeRenderer::Render(Solution * solution)
 {
-	throw runtime_error("Not implemented");
+	auto treeFactory = (TreeFactory *) GetFactory();
+    auto tree = treeFactory->Solution2Tree(solution);
+
+	auto result = tree->GetCode();
+
+	delete tree;
+
+	return result;
 }

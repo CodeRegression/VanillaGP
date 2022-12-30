@@ -8,6 +8,8 @@
 
 #include <gtest/gtest.h>
 
+#include <MathExpLib/NodeFactory.h>
+#include <MathExpLib/TreeFactory.h>
 #include <MathExpLib/TreeRenderer.h>
 using namespace NVL_AI;
 
@@ -20,13 +22,22 @@ using namespace NVL_AI;
  */
 TEST(TreeRenderer_Test, basic_render_test)
 {
-	FAIL() << "Not implemented";
+	// Initialize the factory
+	auto available = vector<int>(); NodeFactory::GetAllNodeTypes(available);
+	auto properties = new TreeProperties(available, 4, 3);
+	auto factory = TreeFactory(properties);
 
-	// Setup
+	// Generate a solution tree
+	auto initializer = DNAInitializer(vector<int> { 1, 4, 5, 6, 0, 2, 200, 6, 1 });
+	auto solution = factory.Generate(&initializer);
 
-	// Execute
+	// Generate the code
+	auto renderer = factory.GetRenderer();
+	auto code = renderer->Render(solution);
 
 	// Confirm
+	ASSERT_EQ(code, string("((p[0] * 2) + -p[1])"));
 
-	// Teardown
+	// Free memory
+	delete solution; delete renderer;
 }
