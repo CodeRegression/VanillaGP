@@ -33,6 +33,7 @@ namespace NVL_AI
 		virtual double Eval(Solution * solution) = 0;
 		virtual Mat GetParams() = 0;
 		virtual double GetOptimalScore() = 0;
+		virtual string GetName() = 0;
 
 		inline NVLib::ARFFHeader *& GetHeader() { return _header; }
 		inline Mat& GetData() { return _data; }

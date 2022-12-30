@@ -20,7 +20,7 @@ namespace NVL_AI
 	class TreeCalculator : public CalculatorBase
 	{
     public:
-		TreeCalculator(SolutionFactoryBase * factory, Mat& params);
+		TreeCalculator(SolutionFactoryBase * factory, const Mat& params);
 		virtual Mat Eval(Solution * solution) override;
 	};
 }

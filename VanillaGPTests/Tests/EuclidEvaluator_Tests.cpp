@@ -66,9 +66,9 @@ TEST(EuclidEvaluator_Test, evaluation_test)
 {
 	WriteTestData("Euclid_Test.arff");
 
-	auto reader = NVLib::ARFFReader("Euclid_Test.arff");
+	auto reader = NVLib::ARFFReader("Euclid_Test.arff"); Mat data = reader.ReadAll();
 	auto solution = Solution(vector<int> {2, 1}); ASSERT_EQ(solution.Score, -1);
-	auto evaluator = EvalFactory::Get("EUCLID", &reader);
+	auto evaluator = EvalFactory::Get("EUCLID", reader.GetHeader(), data);
 	auto params = evaluator->GetParams(); auto calculator = new TestCalculator(nullptr, params);
 	evaluator->SetCalculator(calculator);
 	auto score = evaluator->Eval(&solution);

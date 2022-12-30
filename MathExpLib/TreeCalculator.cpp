@@ -18,7 +18,7 @@ using namespace NVL_AI;
  * @param factory The factory that we are using
  * @param params Input parameters
  */
-TreeCalculator::TreeCalculator(SolutionFactoryBase * factory, Mat& params) : CalculatorBase(factory, params)
+TreeCalculator::TreeCalculator(SolutionFactoryBase * factory, const Mat& params) : CalculatorBase(factory, params)
 {
     // Extra implementation can go here
 }

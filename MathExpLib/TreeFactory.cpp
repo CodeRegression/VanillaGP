@@ -235,7 +235,7 @@ void TreeFactory::ExtractNodes(NodeBase* tree, vector<NodeBase *>& nodes, vector
  * @param params The parameters that we are calculating against
  * @return CalculatorBase The generated calculator
  */
-CalculatorBase * TreeFactory::GetCalculator(Mat& params) 
+CalculatorBase * TreeFactory::GetCalculator(const Mat& params) 
 {
 	return new TreeCalculator(this, params);
 }

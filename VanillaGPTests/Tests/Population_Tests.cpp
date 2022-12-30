@@ -58,7 +58,7 @@ public:
 		}
 	}
 	
-	virtual CalculatorBase * GetCalculator(Mat& params) override { return nullptr; }
+	virtual CalculatorBase * GetCalculator(const Mat& params) override { return nullptr; }
 	virtual RendererBase * GetRenderer() override { return nullptr; }
 	virtual string GetGrammarName() override { return "test_grammar"; }
 	virtual int GetDepthLimit() override {return 1; };	
@@ -77,6 +77,7 @@ class TestEvaluator : public EvaluatorBase
 		virtual double Eval(Solution * solution) { return solution->Score; }
 		virtual Mat GetParams() override { return Mat(); }
 		virtual double GetOptimalScore() override { return _optimalScore; }
+		virtual string GetName() override { return "Test Evaluator"; }
 		inline void SetOptimalScore(double value) { _optimalScore = value; }
 	};
 

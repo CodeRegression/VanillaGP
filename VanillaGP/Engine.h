@@ -18,6 +18,8 @@ using namespace std;
 #include <VanillaGPLib/AlgorithmLoader.h>
 #include <VanillaGPLib/Population.h>
 
+#include <VanillaGPLib/EvalEngine/EvalFactory.h>
+
 #include "Helpers/GrammarFinder.h"
 
 namespace NVL_App
@@ -34,6 +36,8 @@ namespace NVL_App
 
 		NVL_AI::SolutionFactoryBase * _solutionFactory;
 		NVL_AI::Population * _population;
+		NVL_AI::RendererBase * _renderer;
+		NVL_AI::EvaluatorBase * _evaluator;
 
 		string _machineName;
 		int _sessionId;

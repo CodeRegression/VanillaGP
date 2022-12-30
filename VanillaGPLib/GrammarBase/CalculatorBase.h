@@ -26,7 +26,7 @@ namespace NVL_AI
         Mat _params;
         SolutionFactoryBase * _factory;
     public:
-		CalculatorBase(SolutionFactoryBase* factory, Mat& params) : _params(params), _factory(factory) {}
+		CalculatorBase(SolutionFactoryBase* factory, const Mat& params) : _params(params), _factory(factory) {}
 
 		virtual Mat Eval(Solution * solution) = 0;
     protected:

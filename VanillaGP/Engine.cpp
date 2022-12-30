@@ -22,7 +22,7 @@ Engine::Engine(NVLib::Logger* logger, NVLib::Parameters* parameters)
 {
     // Basic initialization
     _logger = logger; _parameters = parameters; _problem = nullptr; _algorithm = nullptr;
-    _population = nullptr; _solutionFactory = nullptr;
+    _population = nullptr; _solutionFactory = nullptr; _evaluator = nullptr; _renderer = nullptr;
 
     // Initialize the size
     _sessionId = -1;
@@ -60,6 +60,8 @@ Engine::~Engine()
     if (_algorithm != nullptr) delete _algorithm;
     if (_population != nullptr) delete _population;
     if (_solutionFactory != nullptr) delete _solutionFactory;
+    if (_evaluator != nullptr) delete _evaluator;
+    if (_renderer != nullptr) delete _renderer;
 
     // Free parameters and code dash
     delete _parameters;  delete _codeDash;
@@ -90,6 +92,12 @@ void Engine::Run()
     _logger->Log(1, "Find the solution factory for generating candidate solutions");
     _solutionFactory = NVL_AI::GrammarFinder::Get(_algorithm->GetGrammar(), _problem->GetFileHeader(), _depthLimit);
     _logger->Log(1, "Factory Loaded - Confirming operation... acquire grammar name: %s", _solutionFactory->GetGrammarName().c_str());
+
+    _logger->Log(1, "Loading Evaluation Systems");
+    _evaluator = NVL_AI::EvalFactory::Get(_algorithm->GetEvaluation(), _problem->GetFileHeader(), _problem->GetData());
+    auto calculator = _solutionFactory->GetCalculator(_evaluator->GetParams()); _evaluator->SetCalculator(calculator);
+    _renderer = _solutionFactory->GetRenderer();
+    _logger->Log(1, "Name of the loaded evaluator: %s", _evaluator->GetName().c_str());
 
     _logger->Log(1, "Creating a session");
     _sessionId = _codeDash->CreateSession(algorithmCode, problemCode, _machineName);

@@ -36,7 +36,7 @@ namespace NVL_AI
 		virtual Solution * Breed(InitializerBase * initializer, Solution * mother, Solution * father) override;
 		virtual Solution * Mutate(InitializerBase * initializer, Solution * solution, double probability) override;
 
-		virtual CalculatorBase * GetCalculator(Mat& params) override;
+		virtual CalculatorBase * GetCalculator(const Mat& params) override;
 		virtual RendererBase * GetRenderer() override;
 
 		virtual string GetGrammarName() override { return "ETREE"; }

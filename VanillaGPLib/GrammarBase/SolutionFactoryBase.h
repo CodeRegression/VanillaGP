@@ -31,7 +31,7 @@ namespace NVL_AI
 		virtual Solution * Breed(InitializerBase * initializer, Solution * mother, Solution * father) = 0;
 		virtual Solution * Mutate(InitializerBase * initializer, Solution * solution, double probability) = 0;
 
-		virtual CalculatorBase * GetCalculator(Mat& params) = 0;
+		virtual CalculatorBase * GetCalculator(const Mat& params) = 0;
 		virtual RendererBase * GetRenderer() = 0;
 
 		virtual string GetGrammarName() = 0;

@@ -26,6 +26,7 @@ namespace NVL_AI
 		virtual double Eval(Solution * solution) override;
 		virtual Mat GetParams() override;
 		virtual double GetOptimalScore() override; 
+		virtual string GetName() override;
 		
 	private:
 		void BuildParameters();

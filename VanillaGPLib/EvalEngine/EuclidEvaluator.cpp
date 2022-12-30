@@ -81,6 +81,19 @@ double EuclidEvaluator::GetOptimalScore()
 }
 
 //--------------------------------------------------
+// What is the name of this evaluator
+//--------------------------------------------------
+
+/**
+ * @brief Retrieve the name of the evaluator
+ * @return string The name of the evaluator as a string
+ */
+string EuclidEvaluator::GetName() 
+{
+	return "EUCLID Regression Evaluator";
+}
+
+//--------------------------------------------------
 // Helper Methods
 //--------------------------------------------------
 
