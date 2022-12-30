@@ -16,6 +16,9 @@ using namespace std;
 #include <VanillaGPLib/ArgUtils.h>
 #include <VanillaGPLib/ProblemLoader.h>
 #include <VanillaGPLib/AlgorithmLoader.h>
+#include <VanillaGPLib/Population.h>
+
+#include "Helpers/GrammarFinder.h"
 
 namespace NVL_App
 {
@@ -29,8 +32,17 @@ namespace NVL_App
 		NVL_AI::AlgorithmLoader * _algorithm;
 		NVL_AI::CodeDash * _codeDash;
 
+		NVL_AI::SolutionFactoryBase * _solutionFactory;
+		NVL_AI::Population * _population;
+
 		string _machineName;
 		int _sessionId;
+
+		int _depthLimit;
+		int _populationSize;
+		int _generationLimit;
+		int _flatLineLimit;
+		double _reuseRatio;
 	public:
 		Engine(NVLib::Logger* logger, NVLib::Parameters * parameters);
 		~Engine();

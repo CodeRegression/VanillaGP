@@ -22,6 +22,7 @@ Engine::Engine(NVLib::Logger* logger, NVLib::Parameters* parameters)
 {
     // Basic initialization
     _logger = logger; _parameters = parameters; _problem = nullptr; _algorithm = nullptr;
+    _population = nullptr; _solutionFactory = nullptr;
 
     // Initialize the size
     _sessionId = -1;
@@ -36,6 +37,14 @@ Engine::Engine(NVLib::Logger* logger, NVLib::Parameters* parameters)
     auto connection = _codeDash->Ping(); 
     if (connection == string()) throw runtime_error("Connection with server failed");
     _logger->Log(1, "Server connection established");
+
+    // Load up other parameters
+    _logger->Log(1, "Loading other configuration parameters");
+    _depthLimit = ArgUtils::GetInteger(_parameters, "depth_limit");
+    _populationSize = ArgUtils::GetInteger(_parameters, "population");
+    _generationLimit = ArgUtils::GetInteger(_parameters, "generation_limit");
+    _flatLineLimit = ArgUtils::GetInteger(_parameters, "flat_line_limit");
+    _reuseRatio = ArgUtils::GetDouble(_parameters, "reuse");
 }
 
 /**
@@ -49,6 +58,8 @@ Engine::~Engine()
     // Free loaded entities
     if (_problem != nullptr) delete _problem;
     if (_algorithm != nullptr) delete _algorithm;
+    if (_population != nullptr) delete _population;
+    if (_solutionFactory != nullptr) delete _solutionFactory;
 
     // Free parameters and code dash
     delete _parameters;  delete _codeDash;
@@ -76,9 +87,24 @@ void Engine::Run()
     _logger->Log(1, "Grammar to be used: %s", _algorithm->GetGrammar().c_str());
     _logger->Log(1, "Evaluator to be used: %s", _algorithm->GetEvaluation().c_str());
 
+    _logger->Log(1, "Find the solution factory for generating candidate solutions");
+    _solutionFactory = NVL_AI::GrammarFinder::Get(_algorithm->GetGrammar(), _problem->GetFileHeader(), _depthLimit);
+    _logger->Log(1, "Factory Loaded - Confirming operation... acquire grammar name: %s", _solutionFactory->GetGrammarName().c_str());
+
     _logger->Log(1, "Creating a session");
     _sessionId = _codeDash->CreateSession(algorithmCode, problemCode, _machineName);
     _logger->Log(1, "Created Session: %i", _sessionId);
+
+    _logger->Log(1, "Building the initial population");
+    _population = new NVL_AI::Population(   _solutionFactory, 
+                                            _codeDash, 
+                                            problemCode, 
+                                            _algorithm->GetEvaluation(), 
+                                            _populationSize, 
+                                            _generationLimit, 
+                                            _flatLineLimit, 
+                                            _reuseRatio);
+    _logger->Log(1, "Population Built! Size: %i", _population->GetPopulation().size());
 
     _logger->Log(1, "Starting the control loop");
     _codeDash->StartSession(_sessionId);
@@ -110,5 +136,7 @@ void Engine::ControlLoop()
 
         _logger->Log(1, "Normal Work Cycle Happens for session: %i", _sessionId);
         sleep(1);
+
+        break; 
     }
 }

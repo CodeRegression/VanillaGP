@@ -1,10 +1,15 @@
 <?xml version="1.0"?>
 <opencv_storage>
-    <problem_code>P_1</problem_code>
-    <problem_file>/home/trevor/Work/Research/SymReg/VanillaGP/Resources/Input/2C2DFCBBB98241BD9177CB878B6EEA6.arff</problem_file>
+    <problem_code>"P_1"</problem_code>
+    <problem_file>"/home/trevor/Work/Research/SymReg/VanillaGP/Resources/Input/2C2DFCBBB98241BD9177CB878B6EEA6.arff"</problem_file>
     <server>"192.168.1.109"</server>
     <port>"80"</port>
     <machine>"192.168.1.109"</machine>
     <uri>"/codedash/"</uri>
-    <algorithm_code>ETREE_C</algorithm_code>
+    <algorithm_code>"ETREE_C"</algorithm_code>
+    <depth_limit>"5"</depth_limit>
+    <population>"500"</population>
+    <generation_limit>"25"</generation_limit>
+    <flat_line_limit>"5"</flat_line_limit>
+    <reuse>"0.2"</reuse>
 </opencv_storage>
