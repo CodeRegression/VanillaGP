@@ -44,7 +44,11 @@ Engine::Engine(NVLib::Logger* logger, NVLib::Parameters* parameters)
     _populationSize = ArgUtils::GetInteger(_parameters, "population");
     _generationLimit = ArgUtils::GetInteger(_parameters, "generation_limit");
     _flatLineLimit = ArgUtils::GetInteger(_parameters, "flat_line_limit");
+    _eliteCount = ArgUtils::GetInteger(_parameters, "elite_count");
+    _tournamentSize = ArgUtils::GetInteger(_parameters, "tournament_size");
     _reuseRatio = ArgUtils::GetDouble(_parameters, "reuse");
+    _mutationRatio = ArgUtils::GetDouble(_parameters, "mutation_ratio");
+    if (_eliteCount < 1) throw runtime_error("Elite count needs to be at least 1");
 }
 
 /**
@@ -104,6 +108,7 @@ void Engine::Run()
     _logger->Log(1, "Created Session: %i", _sessionId);
 
     _logger->Log(1, "Building the initial population");
+    _codeDash->SetMessage(_sessionId, "Building Initial Population");
     _population = new NVL_AI::Population(   _solutionFactory, 
                                             _codeDash, 
                                             problemCode, 
@@ -117,6 +122,23 @@ void Engine::Run()
     _logger->Log(1, "Starting the control loop");
     _codeDash->StartSession(_sessionId);
     ControlLoop();
+
+    _logger->Log(1, "Saving the best elements to database");
+    _codeDash->SetMessage(_sessionId, "Processing terminated - saving best results");
+    auto grammarName = _algorithm->GetGrammar();
+    auto evaluation = _algorithm->GetEvaluation();
+    auto duplicateCheck = unordered_set<string>();
+    for (auto solution : _population->GetBestSolutions()) 
+    {
+        auto dnaString = _renderer->GetDNAString(solution);
+
+        if (duplicateCheck.find(dnaString) != duplicateCheck.end()) continue;
+        duplicateCheck.insert(dnaString);
+
+        double score = solution->Score;
+        _codeDash->AddSolution(problemCode, dnaString, score, grammarName, evaluation, _depthLimit);
+    }
+    _codeDash->SetMessage(_sessionId, "Solutions writing complete");
 }
 
 /**
@@ -142,9 +164,19 @@ void Engine::ControlLoop()
             break;
         }
 
-        _logger->Log(1, "Normal Work Cycle Happens for session: %i", _sessionId);
-        sleep(1);
+        _logger->Log(1, "Evaluating the current generation");
+        _codeDash->SetMessage(_sessionId, "Evaluating the current generation");
+        _population->Evaluate(_evaluator, _eliteCount);
+        auto bestCode = _renderer->Render(_population->GetBestSolutions()[0]);
+        auto bestScore = _population->GetBestSolutions()[0]->Score;
+        _logger->Log(1, "Best Score: %f", bestScore);
+        _codeDash->UpdateScore(_sessionId, _population->GetGeneration(), bestScore);
+        _codeDash->UpdateSolution(_sessionId, bestCode);
 
-        break; 
+        _logger->Log(1, "Constructing the next generation");
+        _codeDash->SetMessage(_sessionId, "Constructing the next generation");
+        _population->NextGeneration(_mutationRatio, _tournamentSize);
+
+        if (_population->Terminate()) break;
     }
 }

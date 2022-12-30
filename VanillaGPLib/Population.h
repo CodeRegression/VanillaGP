@@ -30,6 +30,7 @@ namespace NVL_AI
 	private:
 		SolutionFactoryBase * _factory;
 		CodeDash * _codeDash;
+		InitializerBase * _initializer;
 		vector<Solution *> _population;
 		vector<Solution *> _bestSolutions;
 		int _generation;

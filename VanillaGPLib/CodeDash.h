@@ -56,7 +56,7 @@ namespace NVL_AI
 		string GetHash(const string& problemCode);
 		string GetFile(const string& problemCode);
 
-		int AddSolution(const string& problemCode, const string& dna, double score, const string& grammar, int depth);
+		int AddSolution(const string& problemCode, const string& dna, double score, const string& grammar, const string& evaluation, int depth);
 		string GetSolutions(const string& problemCode, const string& grammar, const string& evaluation, int depthLimit, int rowLimit);
 
 		string GetAlgorithmDetails(const string& algorithmCode);

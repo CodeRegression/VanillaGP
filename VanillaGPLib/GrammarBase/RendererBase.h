@@ -28,6 +28,18 @@ namespace NVL_AI
 		RendererBase(SolutionFactoryBase* factory) : _factory(factory) {}
 
 		virtual string Render(Solution * solution) = 0;
+
+        virtual string GetDNAString(Solution * solution) 
+        {
+            auto result = stringstream();
+            for (auto i = 0; i < solution->DNA.size(); i++) 
+            {
+                if (i != 0) result << ",";
+                result << solution->DNA[i];
+            }
+            return result.str();
+        }
+
     protected:
         inline SolutionFactoryBase * GetFactory() { return _factory; }
 	};

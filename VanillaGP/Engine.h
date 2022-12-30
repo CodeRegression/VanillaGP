@@ -46,7 +46,10 @@ namespace NVL_App
 		int _populationSize;
 		int _generationLimit;
 		int _flatLineLimit;
+		int _eliteCount;
+		int _tournamentSize;
 		double _reuseRatio;
+		double _mutationRatio;
 	public:
 		Engine(NVLib::Logger* logger, NVLib::Parameters * parameters);
 		~Engine();

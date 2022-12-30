@@ -12,4 +12,7 @@
     <generation_limit>"25"</generation_limit>
     <flat_line_limit>"5"</flat_line_limit>
     <reuse>"0.2"</reuse>
+    <elite_count>"50"</elite_count>
+    <mutation_ratio>"0.4"</mutation_ratio>
+    <tournament_size>"16"</tournament_size>
 </opencv_storage>

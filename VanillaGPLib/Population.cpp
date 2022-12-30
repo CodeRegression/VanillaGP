@@ -33,6 +33,9 @@ Population::Population(SolutionFactoryBase * factory, CodeDash * codeDash, const
 	_solutionFound = false;
 	_lastBestScore = DBL_MAX;
 
+	// Create a random initializer
+	_initializer = new  RandomInitializer(time(0));
+
 	// Load the "reuse" population from CodeDash
 	auto reuseSize = (int)ceil(populationSize * reuseRatio);
 	if (reuseSize > 0) LoadCodeDashPopulation(problemCode, factory->GetGrammarName(), evaluation, factory->GetDepthLimit(), reuseSize);
@@ -68,11 +71,10 @@ void Population::LoadCodeDashPopulation(const string& problemCode, const string&
  */
 void Population::FillPopulation(int size) 
 {
-	auto initializer = RandomInitializer(time(0));
 
 	while (_population.size() < size) 
 	{
-		auto solution = _factory->Generate(&initializer, 0);
+		auto solution = _factory->Generate(_initializer, 0);
 		_population.push_back(solution);
 	}
 }
@@ -83,6 +85,7 @@ void Population::FillPopulation(int size)
 Population::~Population()
 {
 	for (auto solution : _population) delete solution;
+	delete _initializer;
 }
 
 //--------------------------------------------------
@@ -159,8 +162,7 @@ void Population::UpdateBest(Solution * solution, int retainCount)
 void Population::NextGeneration(double mutate, int tournamentSize, InitializerBase * initializer)
 {
 	// Make sure that we have an active initializer
-	auto freeInitializer = false;
-	if (initializer == nullptr) { initializer = new RandomInitializer(time(0)); freeInitializer = true; }
+	if (initializer == nullptr) initializer = _initializer;
 	
 	// Add the retain list to the next generation and lookup set
 	auto next = vector<Solution *>(); auto retainSet = unordered_set<Solution *>();
@@ -182,9 +184,6 @@ void Population::NextGeneration(double mutate, int tournamentSize, InitializerBa
 
 	// Update the generation counter
 	_generation++;
-
-	// If we need to free the initializer -> then perform the free operation
-	if (freeInitializer) delete initializer;
 }
 
 /**

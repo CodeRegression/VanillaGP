@@ -271,10 +271,11 @@ string CodeDash::GetFile(const string& problemCode)
  * @param dna The DNA reference to the solution
  * @param score The score associated with the solution that is being added
  * @param grammar The associated grammar that we are using
+ * @param evaluation The evaluation string that we are adding
  * @param depth The depth limit constraint that was added
  * @return int The identifier of the solution that we are adding
  */
-int CodeDash::AddSolution(const string& problemCode, const string& dna, double score, const string& grammar, int depth) 
+int CodeDash::AddSolution(const string& problemCode, const string& dna, double score, const string& grammar, const string& evaluation, int depth) 
 {
 	auto parameters = unordered_map<string, string>();
 	
@@ -283,11 +284,13 @@ int CodeDash::AddSolution(const string& problemCode, const string& dna, double s
 	parameters["dna"] = dna;
 	parameters["score"] = NVLib::Formatter() << score;
 	parameters["grammar"] = grammar;
+	parameters["eval"] = evaluation;
 	parameters["depth"] = NVLib::Formatter() << depth;
 	
 	auto response = FireRequest(parameters);
-
-	return NVLib::StringUtils::String2Int(response.Message);
+	if (response.Error != string()) cout << "Error: " << response.Error << endl;
+	return -1;
+	//return NVLib::StringUtils::String2Int(response.Message);
 }
 
 /**
