@@ -26,6 +26,7 @@ namespace NVL_AI
 			if (grammarName == "ETREE") 
             {
                 auto available = vector<int>(); NodeFactory::GetAllNodeTypes(available);
+				available.erase(available.begin() + 1);
 	            auto properties = new TreeProperties(available, depthLimit, header->GetFields().size());
 	            return new TreeFactory(properties);
             }

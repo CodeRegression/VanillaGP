@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <opencv_storage>
+<flat_line_limit>"20"</flat_line_limit>
+<uri>/codedash/</uri>
+<population>"50000"</population>
+<algorithm_code>ETREE_C</algorithm_code>
 <generation_limit>"25"</generation_limit>
-<depth_limit>"8"</depth_limit>
-<reuse>"0.0004"</reuse>
+<depth_limit>"5"</depth_limit>
+<reuse>"0.0001"</reuse>
 <machine>"192.168.1.109"</machine>
 <tournament_size>"20"</tournament_size>
-<mutation_ratio>"0.6"</mutation_ratio>
+<mutation_ratio>"0.8"</mutation_ratio>
 <problem_code>P_2</problem_code>
 <elite_count>"10"</elite_count>
-<problem_file>/home/trevor/Work/Research/SymReg/VanillaGP/Resources/Input/8B3FB11BE3E4FD39E8DF41D83E24D2F.arff</problem_file>
+<problem_file>/home/trevor/Work/Research/SymReg/VanillaGP/Resources/Input/BE397E46418640286353CE6726DB4FF.arff</problem_file>
 <server>"192.168.1.109"</server>
 <port>"80"</port>
-<uri>/codedash/</uri>
-<flat_line_limit>"10"</flat_line_limit>
-<algorithm_code>ETREE_C</algorithm_code>
-<population>"50000"</population>
 </opencv_storage>
