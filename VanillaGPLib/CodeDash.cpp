@@ -152,7 +152,7 @@ void CodeDash::UpdateSolution(int sessionId, const string& solution)
 	auto parameters = unordered_map<string, string>();
 	parameters["operation"] = "SOLUTION";
 	parameters["session"] = NVLib::StringUtils::Int2String(sessionId);
-	parameters["solution"] = solution;
+	parameters["solution"] = Escape(solution);
 	auto response = FireRequest(parameters);
 	if (response.Error != string()) throw runtime_error(response.Error);
 }
@@ -490,6 +490,9 @@ string CodeDash::Escape(const string& value)
 	for (auto& character : value) 
 	{
 		if (character == '%') result << "%25";
+		else if (character == '+') result << "%2B";
+		else if (character == ',') result << "%2C";
+		else if (character == '/') result << "%2F";
 		else result << character;
 
 	}
